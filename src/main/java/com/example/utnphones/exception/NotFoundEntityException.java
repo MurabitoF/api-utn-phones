@@ -3,12 +3,12 @@ package com.example.utnphones.exception;
 
 import org.springframework.http.HttpStatus;
 
-public class NotFoundException extends Exception {
+public class NotFoundEntityException extends Exception {
 
     private final Integer code;
     private String className;
 
-    public NotFoundException(String className){
+    public NotFoundEntityException(String className){
         this.code = HttpStatus.NOT_FOUND.value();
     }
 

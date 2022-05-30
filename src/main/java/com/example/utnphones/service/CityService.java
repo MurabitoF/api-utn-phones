@@ -1,6 +1,6 @@
 package com.example.utnphones.service;
 
-import com.example.utnphones.exception.NotFoundException;
+import com.example.utnphones.exception.NotFoundEntityException;
 import com.example.utnphones.model.City;
 import com.example.utnphones.repository.CityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +22,9 @@ public class CityService {
         return cityRepository.findAll(pageable);
     }
 
-    public City getCityById(Long id) throws NotFoundException {
+    public City getCityById(Long id) throws NotFoundEntityException {
         return cityRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("City"));
+                .orElseThrow(() -> new NotFoundEntityException("City"));
     }
 
     public City saveNewCity(final City newCity){

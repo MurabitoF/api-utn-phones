@@ -1,6 +1,6 @@
 package com.example.utnphones.service;
 
-import com.example.utnphones.exception.NotFoundException;
+import com.example.utnphones.exception.NotFoundEntityException;
 import com.example.utnphones.model.Province;
 import com.example.utnphones.repository.ProvinceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +22,9 @@ public class ProvinceService {
         return provinceRepository.findAll(pageable);
     }
 
-    public Province getProvinceById(Long id) throws NotFoundException {
+    public Province getProvinceById(Long id) throws NotFoundEntityException {
         return provinceRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException("Province"));
+                .orElseThrow(() -> new NotFoundEntityException("Province"));
     }
 
     public Province saveNewProvince(final Province newProvince){
