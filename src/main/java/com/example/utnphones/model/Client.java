@@ -4,10 +4,8 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @AllArgsConstructor
@@ -15,6 +13,9 @@ import javax.persistence.Table;
 @JsonTypeName("client")
 @Table(name = "clients")
 public class Client extends Account {
+
+    @Column(name = "delete_at")
+    private LocalDateTime deleteAt;
 
     @OneToOne
     @JoinColumn(name = "phone_line_id")
@@ -26,5 +27,13 @@ public class Client extends Account {
 
     public void setPhoneLine(PhoneLine phoneLine) {
         this.phoneLine = phoneLine;
+    }
+
+    public LocalDateTime getDeleteAt() {
+        return deleteAt;
+    }
+
+    public void setDeleteAt(LocalDateTime deleteAt) {
+        this.deleteAt = deleteAt;
     }
 }
