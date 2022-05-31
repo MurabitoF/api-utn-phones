@@ -23,11 +23,13 @@ public class CallFee {
     @OneToMany(mappedBy = "callFee")
     private List<CallFeeRange> callFeeRange;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+
+    @OneToOne
     @JoinColumn(name = "city_org")
     private City cityOrg;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+
+    @OneToOne
     @JoinColumn(name = "city_dest")
     private City cityDest;
 
