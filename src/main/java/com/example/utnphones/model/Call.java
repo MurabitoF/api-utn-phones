@@ -25,18 +25,25 @@ public class Call {
     @Column(name = "duration")
     private Integer duration;
 
-    @Column(name = "total")
+    @Column(name = "total", insertable = false)
     private Double total;
 
     @Column(name = "phone_origen")
     private String phoneOrigen;
 
     @Column(name = "phone_destination")
-    private String PhoneDestination;
+    private String phoneDestination;
 
     @OneToOne
     @JoinColumn(name = "call_fee_id", insertable = false)
     private CallFee callFee;
+
+    public Call(LocalDateTime callDate, Integer duration, String phoneOrigen, String phoneDestination) {
+        this.callDate = callDate;
+        this.duration = duration;
+        this.phoneOrigen = phoneOrigen;
+        this.phoneDestination = phoneDestination;
+    }
 
     public Long getCallId() {
         return callId;
@@ -79,11 +86,11 @@ public class Call {
     }
 
     public String getPhoneDestination() {
-        return PhoneDestination;
+        return phoneDestination;
     }
 
     public void setPhoneDestination(String phoneDestination) {
-        PhoneDestination = phoneDestination;
+        this.phoneDestination = phoneDestination;
     }
 
     public CallFee getCallFee() {
