@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @JsonTypeName("employee")
 @Table(name = "employees")
-public class Employee extends User{
+public class Employee extends Account {
 
     @Column(name = "employee_area")
     private String employeeArea;

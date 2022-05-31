@@ -11,7 +11,7 @@ import javax.persistence.*;
                 @JsonSubTypes.Type(value = Employee.class, name = "employee")
         })
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class User {
+public abstract class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)

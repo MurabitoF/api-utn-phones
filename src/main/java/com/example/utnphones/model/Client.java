@@ -8,14 +8,13 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import java.util.List;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonTypeName("client")
 @Table(name = "clients")
-public class Client extends User {
+public class Client extends Account {
 
     @OneToOne
     @JoinColumn(name = "phone_line_id")
