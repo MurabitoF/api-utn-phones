@@ -66,10 +66,10 @@ public class CallController {
         Call newCall = new Call(
                 LocalDateTime.parse(callRequest.getDatetime()),
                 callRequest.getDuration(),
-                callRequest.getOrigen(),
+                callRequest.getOrigin(),
                 callRequest.getDestination()
         );
-        
+
         return ResponseEntity.status(HttpStatus.CREATED).body(callService.saveNewCall(newCall));
     }
 }

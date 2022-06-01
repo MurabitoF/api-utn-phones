@@ -28,8 +28,8 @@ public class Call {
     @Column(name = "total", insertable = false)
     private Double total;
 
-    @Column(name = "phone_origen")
-    private String phoneOrigen;
+    @Column(name = "phone_origin")
+    private String phoneOrigin;
 
     @Column(name = "phone_destination")
     private String phoneDestination;
@@ -38,10 +38,10 @@ public class Call {
     @JoinColumn(name = "call_fee_id", insertable = false)
     private CallFee callFee;
 
-    public Call(LocalDateTime callDate, Integer duration, String phoneOrigen, String phoneDestination) {
+    public Call(LocalDateTime callDate, Integer duration, String phoneOrigin, String phoneDestination) {
         this.callDate = callDate;
         this.duration = duration;
-        this.phoneOrigen = phoneOrigen;
+        this.phoneOrigin = phoneOrigin;
         this.phoneDestination = phoneDestination;
     }
 
@@ -77,12 +77,12 @@ public class Call {
         this.total = total;
     }
 
-    public String getPhoneOrigen() {
-        return phoneOrigen;
+    public String getPhoneOrigin() {
+        return phoneOrigin;
     }
 
-    public void setPhoneOrigen(String phoneOrigen) {
-        this.phoneOrigen = phoneOrigen;
+    public void setPhoneOrigen(String phoneOrigin) {
+        this.phoneOrigin = phoneOrigin;
     }
 
     public String getPhoneDestination() {

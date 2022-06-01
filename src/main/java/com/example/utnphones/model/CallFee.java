@@ -1,6 +1,7 @@
 package com.example.utnphones.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -9,6 +10,7 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Table(name = "calls_fees")
 public class CallFee {
 
@@ -25,13 +27,13 @@ public class CallFee {
 
 
     @OneToOne
-    @JoinColumn(name = "city_org")
-    private City cityOrg;
+    @JoinColumn(name = "city_origin")
+    private City cityOrigin;
 
 
     @OneToOne
-    @JoinColumn(name = "city_dest")
-    private City cityDest;
+    @JoinColumn(name = "city_destination")
+    private City cityDestination;
 
     public Long getCallFeeId() {
         return callFeeId;
@@ -57,19 +59,19 @@ public class CallFee {
         this.callFeeRange = callFeeRange;
     }
 
-    public City getCityOrg() {
-        return cityOrg;
+    public City getCityOrigin() {
+        return cityOrigin;
     }
 
-    public void setCityOrg(City cityOrg) {
-        this.cityOrg = cityOrg;
+    public void setCityOrigin(City cityOrigin) {
+        this.cityOrigin = cityOrigin;
     }
 
-    public City getCityDest() {
-        return cityDest;
+    public City getCityDestination() {
+        return cityDestination;
     }
 
-    public void setCityDest(City cityDest) {
-        this.cityDest = cityDest;
+    public void setCityDestination(City cityDestination) {
+        this.cityDestination = cityDestination;
     }
 }

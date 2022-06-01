@@ -18,7 +18,7 @@ public class CallRequestDto {
     @NotBlank(message = "phoneOrg is required")
     @Size(min = 10, message = "phoneOrg must have 10 characters")
     @Size(max = 10, message = "phoneOrg must have 10 characters")
-    private String origen;
+    private String origin;
 
     @NotBlank(message = "startAt date is required")
     @Size(min = 10, message = "phoneDest must have 10 characters")
