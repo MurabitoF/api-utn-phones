@@ -19,26 +19,29 @@ public class Call {
     @Column(name = "call_id")
     private Long callId;
 
-    @Column(name = "call_date")
+    @Column(name = "call_date", nullable = false)
     private LocalDateTime callDate;
 
-    @Column(name = "duration")
+    @Column(name = "duration", nullable = false)
     private Integer duration;
 
-    @Column(name = "total", insertable = false)
+    @Column(name = "total", insertable = false, nullable = false)
     private Double total;
 
-    @Column(name = "phone_origin")
-    private String phoneOrigin;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "phone_origin", referencedColumnName = "phone_number", nullable = false)
+    private PhoneLine phoneOrigin;
 
-    @Column(name = "phone_destination")
-    private String phoneDestination;
+
+    @ManyToOne
+    @JoinColumn(name = "phone_destination", referencedColumnName = "phone_number", nullable = false)
+    private PhoneLine phoneDestination;
 
     @OneToOne
     @JoinColumn(name = "call_fee_id", insertable = false)
     private CallFee callFee;
 
-    public Call(LocalDateTime callDate, Integer duration, String phoneOrigin, String phoneDestination) {
+    public Call(LocalDateTime callDate, Integer duration, PhoneLine phoneOrigin, PhoneLine phoneDestination) {
         this.callDate = callDate;
         this.duration = duration;
         this.phoneOrigin = phoneOrigin;
@@ -77,19 +80,19 @@ public class Call {
         this.total = total;
     }
 
-    public String getPhoneOrigin() {
+    public PhoneLine getPhoneOrigin() {
         return phoneOrigin;
     }
 
-    public void setPhoneOrigen(String phoneOrigin) {
+    public void setPhoneOrigen(PhoneLine phoneOrigin) {
         this.phoneOrigin = phoneOrigin;
     }
 
-    public String getPhoneDestination() {
+    public PhoneLine getPhoneDestination() {
         return phoneDestination;
     }
 
-    public void setPhoneDestination(String phoneDestination) {
+    public void setPhoneDestination(PhoneLine phoneDestination) {
         this.phoneDestination = phoneDestination;
     }
 

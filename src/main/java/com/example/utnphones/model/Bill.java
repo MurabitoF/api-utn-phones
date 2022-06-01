@@ -22,14 +22,14 @@ public class Bill {
     @Column(name = "calls_amount")
     private Integer callsAmount;
 
-    @Column(name = "total")
+    @Column(name = "total", nullable = false)
     private Double total;
 
-    @Column(name = "bill_date")
+    @Column(name = "bill_date", nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate billDate;
 
-    @Column(name = "expiration_date")
+    @Column(name = "expiration_date", nullable = false)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private LocalDate expirationDate;
 
@@ -38,7 +38,7 @@ public class Bill {
     private LocalDateTime billPaidAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "account_id", nullable = false)
     private Client client;
 
     public Long getBillId() {

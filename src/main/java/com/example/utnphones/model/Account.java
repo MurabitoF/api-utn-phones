@@ -30,6 +30,10 @@ public abstract class Account {
     @JoinColumn(name = "city_id")
     private City city;
 
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public Long getUserId() {
         return userId;
     }
@@ -68,5 +72,13 @@ public abstract class Account {
 
     public void setCity(City city) {
         this.city = city;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

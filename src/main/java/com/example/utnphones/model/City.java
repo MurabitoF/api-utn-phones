@@ -18,14 +18,14 @@ public class City {
     @Column(name = "city_id")
     private Long cityId;
 
-    @Column(name = "city_name")
+    @Column(name = "city_name", length = 100, nullable = false)
     private String cityName;
 
-    @Column(name = "area_code", unique = true)
+    @Column(name = "area_code", length = 6, nullable = false, unique = true)
     private String areaCode;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "province_id")
+    @JoinColumn(name = "province_id", nullable = false)
     private Province province;
 
     public Long getCityId() {

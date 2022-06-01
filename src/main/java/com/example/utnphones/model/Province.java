@@ -16,7 +16,7 @@ public class Province {
     @Column(name = "province_id")
     private Long provinceId;
 
-    @Column(name = "province_name")
+    @Column(name = "province_name", length = 50, nullable = false)
     private String provinceName;
 
     public Long getProvinceId() {

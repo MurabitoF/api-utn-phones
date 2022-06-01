@@ -22,18 +22,18 @@ public class CallFee {
     @Column(name = "price")
     private Double price;
 
-    @OneToMany(mappedBy = "callFee")
-    private List<CallFeeRange> callFeeRange;
-
-
     @OneToOne
-    @JoinColumn(name = "city_origin")
+    @JoinColumn(name = "city_origin", nullable = false)
     private City cityOrigin;
 
 
     @OneToOne
-    @JoinColumn(name = "city_destination")
+    @JoinColumn(name = "city_destination", nullable = false)
     private City cityDestination;
+
+
+    @OneToMany(mappedBy = "callFee")
+    private List<CallFeeRange> callFeeRange;
 
     public Long getCallFeeId() {
         return callFeeId;

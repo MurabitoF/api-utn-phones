@@ -16,7 +16,7 @@ public class PhoneLine {
     @Column(name = "phone_line_id")
     private Long phoneLineId;
 
-    @Column(name = "phone_number", unique = true)
+    @Column(name = "phone_number", length = 10, unique = true)
     private String phoneNumber;
 
 }

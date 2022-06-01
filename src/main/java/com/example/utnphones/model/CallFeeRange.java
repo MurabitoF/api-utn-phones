@@ -19,14 +19,14 @@ public class CallFeeRange {
     @Column(name = "call_fee_range_id")
     private Long callFeeRangeId;
 
-    @Column(name = "start_at")
+    @Column(name = "start_at", nullable = false)
     private LocalTime startAt;
 
-    @Column(name = "end_at")
+    @Column(name = "end_at", nullable = false)
     private LocalTime endAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "call_fee_id")
+    @JoinColumn(name = "call_fee_id", nullable = false)
     private CallFee callFee;
 
     public Long getCallFeeRangeId() {

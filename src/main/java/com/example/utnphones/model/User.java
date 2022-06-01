@@ -22,9 +22,9 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private Account account;
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     public Long getUserId() {
         return userId;
@@ -50,11 +50,11 @@ public class User {
         this.password = password;
     }
 
-    public Account getAccount() {
-        return account;
+    public Role getRole() {
+        return role;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
