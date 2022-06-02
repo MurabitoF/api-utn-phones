@@ -1,6 +1,7 @@
 package com.example.utnphones.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import javax.persistence.*;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Table(name = "phone_lines")
 public class PhoneLine {
 

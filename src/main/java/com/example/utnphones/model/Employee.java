@@ -2,13 +2,16 @@ package com.example.utnphones.model;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@SuperBuilder
 @JsonTypeName("employee")
 @Table(name = "employees")
 public class Employee extends Account {

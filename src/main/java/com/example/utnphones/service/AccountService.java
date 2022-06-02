@@ -12,5 +12,5 @@ public interface AccountService {
     public Page<Client> getAllClients(Pageable pageable);
     public Employee getEmployeeById(Long id) throws NotFoundEntityException;
     public Client getClientById(Long id) throws NotFoundEntityException;
-    public Account saveNewEmployee(Account account);
+    public Account saveNewAccount(Account account);
 }

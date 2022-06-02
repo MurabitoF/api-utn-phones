@@ -2,6 +2,9 @@ package com.example.utnphones.model;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 @Entity
@@ -11,6 +14,9 @@ import javax.persistence.*;
                 @JsonSubTypes.Type(value = Employee.class, name = "employee")
         })
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
 public abstract class Account {
 
     @Id

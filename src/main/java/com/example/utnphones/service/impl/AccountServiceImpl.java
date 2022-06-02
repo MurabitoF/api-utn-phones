@@ -19,13 +19,11 @@ public class AccountServiceImpl implements AccountService {
 
     private final EmployeeRepository employeeRepository;
     private final ClientRepository clientRepository;
-    private final ModelMapper modelMapper;
 
     @Autowired
-    public AccountServiceImpl(EmployeeRepository employeeRepository, ClientRepository clientRepository, ModelMapper modelMapper) {
+    public AccountServiceImpl(EmployeeRepository employeeRepository, ClientRepository clientRepository) {
         this.employeeRepository = employeeRepository;
         this.clientRepository = clientRepository;
-        this.modelMapper = modelMapper;
     }
 
     @Override
@@ -51,12 +49,12 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account saveNewEmployee(Account account) {
+    public Account saveNewAccount(Account account) {
         if (account instanceof Employee){
-            Employee newEmployee = modelMapper.map(account, Employee.class);
+            Employee newEmployee = (Employee) account;
             return employeeRepository.save(newEmployee);
         } else {
-            Client newClient = modelMapper.map(account, Client.class);
+            Client newClient = (Client) account;
             return clientRepository.save(newClient);
         }
     }

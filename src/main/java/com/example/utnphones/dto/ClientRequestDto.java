@@ -17,6 +17,6 @@ import javax.validation.constraints.Positive;
 public class ClientRequestDto extends AccountRequestDto{
 
     @NotNull(message = "phoneLine is required")
-    @Positive(message = "phoneLine must be greater than 0")
-    private Long phoneLineId;
+    private PhoneLineRequestDto phoneLine;
+
 }

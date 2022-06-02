@@ -3,6 +3,7 @@ package com.example.utnphones.model;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@SuperBuilder
 @JsonTypeName("client")
 @Table(name = "clients")
 public class Client extends Account {
