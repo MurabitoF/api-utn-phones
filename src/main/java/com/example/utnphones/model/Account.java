@@ -10,36 +10,37 @@ import javax.persistence.*;
         {@JsonSubTypes.Type(value = Client.class, name = "client"),
                 @JsonSubTypes.Type(value = Employee.class, name = "employee")
         })
-@Inheritance(strategy = InheritanceType.JOINED)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class Account {
 
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
-    private Long userId;
+    @Column(name = "account_id")
+    private Long accountId;
 
-    @Column(name = "first_name")
+    @Column(name = "first_name", length = 50, nullable = false)
     private String firstName;
 
-    @Column(name = "surname")
+    @Column(name = "surname", length = 50, nullable = false)
     private String surname;
 
-    @Column(name = "dni")
+    @Column(name = "dni", length = 10, nullable = false)
     private String dni;
 
     @OneToOne
-    @JoinColumn(name = "city_id")
+    @JoinColumn(name = "city_id", nullable = false)
     private City city;
 
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    public Long getUserId() {
-        return userId;
+    public Long getAccountId() {
+        return accountId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setAccountId(Long userId) {
+        this.accountId = userId;
     }
 
     public String getFirstName() {
