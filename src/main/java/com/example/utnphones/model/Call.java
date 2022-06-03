@@ -41,6 +41,10 @@ public class Call {
     @JoinColumn(name = "call_fee_id", insertable = false)
     private CallFee callFee;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "bill_id")
+    private Bill bill;
+
     public Call(LocalDateTime callDate, Integer duration, PhoneLine phoneOrigin, PhoneLine phoneDestination) {
         this.callDate = callDate;
         this.duration = duration;
@@ -102,5 +106,17 @@ public class Call {
 
     public void setCallFee(CallFee callFee) {
         this.callFee = callFee;
+    }
+
+    public void setPhoneOrigin(PhoneLine phoneOrigin) {
+        this.phoneOrigin = phoneOrigin;
+    }
+
+    public Bill getBill() {
+        return bill;
+    }
+
+    public void setBill(Bill bill) {
+        this.bill = bill;
     }
 }

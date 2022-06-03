@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -38,8 +39,11 @@ public class Bill {
     private LocalDateTime billPaidAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "account_id", nullable = false)
+    @JoinColumn(name = "client_id", nullable = false)
     private Client client;
+
+    @OneToMany(mappedBy = "bill", fetch = FetchType.LAZY)
+    private List<Call> calls;
 
     public Long getBillId() {
         return billId;
