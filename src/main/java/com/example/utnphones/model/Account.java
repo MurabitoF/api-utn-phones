@@ -30,7 +30,7 @@ public abstract class Account {
     @Column(name = "surname", length = 50, nullable = false)
     private String surname;
 
-    @Column(name = "dni", length = 10, nullable = false)
+    @Column(name = "dni", length = 10, nullable = false, unique = true)
     private String dni;
 
     @OneToOne

@@ -9,11 +9,6 @@ import org.springframework.context.annotation.Configuration;
 public class Config {
 
     @Bean
-    public ObjectMapper objectMapper(){
-        return new ObjectMapper();
-    }
-
-    @Bean
     public ModelMapper modelMapper(){
         return new ModelMapper();
     }

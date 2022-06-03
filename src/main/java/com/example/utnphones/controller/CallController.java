@@ -3,7 +3,9 @@ package com.example.utnphones.controller;
 import com.example.utnphones.dto.CallRequestDto;
 import com.example.utnphones.exception.NotFoundEntityException;
 import com.example.utnphones.model.Call;
+import com.example.utnphones.model.PhoneLine;
 import com.example.utnphones.service.CallService;
+import com.example.utnphones.service.PhoneLineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,10 +22,12 @@ import java.time.LocalDateTime;
 public class CallController {
 
     private final CallService callService;
+    private final PhoneLineService phoneLineService;
 
     @Autowired
-    public CallController(CallService callService) {
+    public CallController(CallService callService, PhoneLineService phoneLineService) {
         this.callService = callService;
+        this.phoneLineService = phoneLineService;
     }
 
     @GetMapping("/")
@@ -62,12 +66,15 @@ public class CallController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Call> saveNewCall(@RequestBody @Valid final CallRequestDto callRequest){
+    public ResponseEntity<Call> saveNewCall(@RequestBody @Valid final CallRequestDto callRequest) throws NotFoundEntityException {
+        PhoneLine phoneOrigin = phoneLineService.getPhoneLineByPhoneNumber(callRequest.getOrigin());
+        PhoneLine phoneDestination = phoneLineService.getPhoneLineByPhoneNumber(callRequest.getDestination());
+
         Call newCall = new Call(
                 LocalDateTime.parse(callRequest.getDatetime()),
                 callRequest.getDuration(),
-                callRequest.getOrigin(),
-                callRequest.getDestination()
+                phoneOrigin,
+                phoneDestination
         );
 
         return ResponseEntity.status(HttpStatus.CREATED).body(callService.saveNewCall(newCall));

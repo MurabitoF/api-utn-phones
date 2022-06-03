@@ -6,6 +6,8 @@ import com.example.utnphones.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,13 +26,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User login(String username, String password) {
-        return userRepository.findByUsernameAndPassword(username, password).orElse(null);
-
+    public User saveNewUser(User newUser) {
+        return userRepository.save(newUser);
     }
 
     @Override
-    public User saveNewUser(User newUser) {
-        return userRepository.save(newUser);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Username does not exist"));
     }
 }
