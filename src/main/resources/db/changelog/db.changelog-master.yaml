@@ -1,1 +1,11 @@
 databaseChangeLog:
+  - include:
+      file: db/changelog/init_database.sql
+  - include:
+      file: db/changelog/functions.sql
+  - include:
+      file: db/changelog/procedures.sql
+  - include:
+      file: db/changelog/triggers.sql
+
+
