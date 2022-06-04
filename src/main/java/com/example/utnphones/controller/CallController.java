@@ -18,7 +18,7 @@ import javax.validation.Valid;
 import java.time.LocalDateTime;
 
 @RestController
-@RequestMapping("/calls")
+@RequestMapping("/api/calls")
 public class CallController {
 
     private final CallService callService;

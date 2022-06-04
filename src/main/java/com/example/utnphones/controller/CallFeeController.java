@@ -22,7 +22,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/callFees")
+@RequestMapping("/api/callFees")
 public class CallFeeController {
 
     private final CallFeeService callFeeService;

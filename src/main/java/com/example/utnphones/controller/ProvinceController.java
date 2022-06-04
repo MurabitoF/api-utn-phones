@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/provinces")
+@RequestMapping("/api/provinces")
 public class ProvinceController {
 
     private final ProvinceService provinceService;

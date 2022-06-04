@@ -13,3 +13,7 @@ spring:
     user: franco
     password: a
     url: jdbc:mysql://localhost:3306/utn_phones
+
+springdoc:
+  swagger-ui:
+    config-url: /swagger-ui.html

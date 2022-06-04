@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/phoneLine")
+@RequestMapping("/api/phoneLine")
 public class PhoneLineController {
 
     private final PhoneLineService phoneLineService;
