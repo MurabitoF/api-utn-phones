@@ -1,5 +1,6 @@
 package com.example.utnphones.controller;
 
+import com.example.utnphones.exception.EntityExitstExeption;
 import com.example.utnphones.exception.ErrorResponse;
 import com.example.utnphones.exception.NotFoundEntityException;
 import org.springframework.http.ResponseEntity;
@@ -23,4 +24,14 @@ public class ApiControllerAdvice {
                         .build());
     }
 
+    @ExceptionHandler(EntityExitstExeption.class)
+    public ResponseEntity<ErrorResponse> entityExists(EntityExitstExeption ex){
+        return ResponseEntity
+                .status(ex.getCode())
+                .body(ErrorResponse.builder()
+                        .timestamp(LocalDateTime.now())
+                        .code(ex.getCode())
+                        .message(ex.getMessage())
+                        .build());
+    }
 }

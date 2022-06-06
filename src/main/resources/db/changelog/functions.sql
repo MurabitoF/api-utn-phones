@@ -1,6 +1,6 @@
 -- liquibase formatted sql
 
--- changeset franco:1
+-- changeset franco:1 splitStatements:false stripComments:false endDelimiter:$
 create function findCityFromPhoneNumber(pPhoneNumber varchar(10))
     returns bigint
     reads sql data
@@ -14,7 +14,7 @@ begin
           (select max(length(area_code)) from cities where pPhoneNumber like concat(area_code, '%'));
 
     return vCityId;
-end;
+end $
 
 -- rollback drop function findCityFromPhoneNumber;
 

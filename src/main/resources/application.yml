@@ -3,6 +3,7 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: validate
+
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/utn_phones
@@ -13,7 +14,9 @@ spring:
     user: franco
     password: a
     url: jdbc:mysql://localhost:3306/utn_phones
+    change-log: db/changelog/db.changelog-master.yaml
 
 springdoc:
   swagger-ui:
-    config-url: /swagger-ui.html
+    disable-swagger-default-url: true
+    path: /swagger-ui.html

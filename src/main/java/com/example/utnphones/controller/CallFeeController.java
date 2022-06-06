@@ -2,6 +2,7 @@ package com.example.utnphones.controller;
 
 import com.example.utnphones.dto.CallFeeRangeRequestDto;
 import com.example.utnphones.dto.CallFeeRequestDto;
+import com.example.utnphones.exception.EntityExitstExeption;
 import com.example.utnphones.exception.NotFoundEntityException;
 import com.example.utnphones.model.CallFee;
 import com.example.utnphones.model.CallFeeRange;
@@ -22,7 +23,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/callFees")
+@RequestMapping("/api/callsFees")
 public class CallFeeController {
 
     private final CallFeeService callFeeService;
@@ -69,7 +70,7 @@ public class CallFeeController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<CallFee> saveNewCallFee(@RequestBody @Valid final CallFeeRequestDto callFeeRequest) throws NotFoundEntityException {
+    public ResponseEntity<CallFee> saveNewCallFee(@RequestBody @Valid final CallFeeRequestDto callFeeRequest) throws NotFoundEntityException, EntityExitstExeption {
         City cityOrigin = cityService.getCityById(callFeeRequest.getCityOrigin());
         City cityDestination = cityService.getCityById(callFeeRequest.getCityDestination());
 
@@ -87,13 +88,14 @@ public class CallFeeController {
                 .endAt(LocalTime.parse(callFeeRequest.getEndAt()))
                 .build();
 
-        callFeeRangeService.saveNewRange(newCallFeeRange);
+        CallFeeRange callfeeRange = callFeeRangeService.saveNewRange(newCallFeeRange);
 
+        newCallFee.getCallFeeRange().add(callfeeRange);
         return ResponseEntity.status(HttpStatus.CREATED).body(newCallFee);
     }
 
     @PostMapping("/{id}/ranges/")
-    public ResponseEntity<CallFeeRange> saveNewRangeToCallFee(@PathVariable Long id, @RequestBody final CallFeeRangeRequestDto callFeeRangeRequest) throws NotFoundEntityException {
+    public ResponseEntity<CallFeeRange> saveNewRangeToCallFee(@PathVariable Long id, @RequestBody final CallFeeRangeRequestDto callFeeRangeRequest) throws NotFoundEntityException, EntityExitstExeption {
         CallFee callFee = callFeeService.getCallFeeById(id);
 
         CallFeeRange newCallFeeRange = CallFeeRange.builder()
@@ -103,5 +105,24 @@ public class CallFeeController {
                 .build();
 
         return ResponseEntity.status(HttpStatus.CREATED).body(callFeeRangeService.saveNewRange(newCallFeeRange));
+    }
+
+    @PutMapping("/{callFeeId}/ranges/{rangeId}/")
+    public ResponseEntity<CallFeeRange> updateRange(@PathVariable Long callFeeId, @PathVariable Long rangeId, @Valid @RequestBody CallFeeRangeRequestDto callFeeRangeRequest) throws NotFoundEntityException {
+        callFeeService.getCallFeeById(callFeeId);
+        CallFeeRange callFeeRange = CallFeeRange.builder()
+                .startAt(LocalTime.parse(callFeeRangeRequest.getStartAt()))
+                .endAt(LocalTime.parse(callFeeRangeRequest.getEndAt()))
+                .build();
+
+        return ResponseEntity.ok(callFeeRangeService.updateCallFeeRange(rangeId, callFeeRange));
+    }
+
+    @DeleteMapping("/{callFeeId}/ranges/{rangeId}/")
+    public ResponseEntity<CallFeeRange> deleteCallFeeRange(@PathVariable Long callFeeId, @PathVariable Long rangeId) throws NotFoundEntityException {
+        callFeeService.getCallFeeById(callFeeId);
+        callFeeRangeService.deleteCallFeeRange(rangeId);
+
+        return ResponseEntity.noContent().build();
     }
 }

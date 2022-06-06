@@ -14,6 +14,7 @@ import javax.persistence.*;
 @SuperBuilder
 @JsonTypeName("employee")
 @Table(name = "employees")
+@PrimaryKeyJoinColumn(name = "employee_id")
 public class Employee extends Account {
 
     @Column(name = "employee_area")

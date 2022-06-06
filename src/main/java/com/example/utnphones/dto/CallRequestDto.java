@@ -25,7 +25,7 @@ public class CallRequestDto {
     @Size(max = 10, message = "phoneDest must have 10 characters")
     private String destination;
 
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     @NotNull(message = "callDate is required")
     private String datetime;
 

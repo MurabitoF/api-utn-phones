@@ -7,6 +7,7 @@ import com.example.utnphones.model.PhoneLine;
 import com.example.utnphones.service.CallService;
 import com.example.utnphones.service.PhoneLineService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.web.format.DateTimeFormatters;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @RestController
 @RequestMapping("/api/calls")
@@ -71,7 +73,7 @@ public class CallController {
         PhoneLine phoneDestination = phoneLineService.getPhoneLineByPhoneNumber(callRequest.getDestination());
 
         Call newCall = new Call(
-                LocalDateTime.parse(callRequest.getDatetime()),
+                LocalDateTime.parse(callRequest.getDatetime(), DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")),
                 callRequest.getDuration(),
                 phoneOrigin,
                 phoneDestination

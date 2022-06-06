@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @SuperBuilder
 @JsonTypeName("client")
 @Table(name = "clients")
+@PrimaryKeyJoinColumn(name = "client_id")
 public class Client extends Account {
 
     @Column(name = "delete_at")

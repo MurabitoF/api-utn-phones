@@ -1,5 +1,5 @@
 -- liquibase formatted sql
-use prueba;
+
 -- changeset franco:1
 create table provinces
 (
@@ -19,7 +19,7 @@ create table cities
     area_code   varchar(6)   not null,
     constraint pk_city primary key (city_id),
     constraint fk_cities_provinces foreign key (province_id) references provinces (province_id) on delete restrict on update cascade,
-    constraint unq_area_code unique (area_code)
+    constraint uk_area_code unique (area_code)
 );
 
 -- rollback drop table cities;
@@ -30,7 +30,7 @@ create table phone_lines
     phone_line_id bigint      not null auto_increment,
     phone_number  varchar(10) not null,
     constraint pk_phone_lines primary key (phone_line_id),
-    constraint unq_phone_number unique (phone_number)
+    constraint uk_phone_number unique (phone_number)
 );
 
 -- rollback drop table phone_lines;
@@ -48,44 +48,48 @@ create table users
 -- rollback drop table users;
 
 -- changeset franco:5
+create table accounts
+(
+    account_id bigint      not null auto_increment,
+    city_id    bigint      not null,
+    user_id    bigint,
+    dni        varchar(10) not null,
+    first_name varchar(50) not null,
+    surname    varchar(50) not null,
+    constraint pk_accounts primary key (account_id),
+    constraint fk_employees_cities foreign key (city_id) references cities (city_id) on delete restrict on update cascade,
+    constraint fk_employees_users foreign key (user_id) references users (user_id),
+    constraint uk_dni unique (dni)
+);
+
+-- rollback drop table accounts;
+
+-- changeset franco:6
 create table employees
 (
     employee_id   bigint      not null auto_increment,
-    city_id       bigint      not null,
-    user_id       bigint,
-    dni           varchar(10) not null,
-    first_name    varchar(50) not null,
-    surname       varchar(50) not null,
     employee_area varchar(60) not null,
     constraint pk_employees primary key (employee_id),
-    constraint fk_employees_cities foreign key (city_id) references cities (city_id) on delete restrict on update cascade,
-    constraint fk_employees_users foreign key (user_id) references users (user_id),
-    constraint unq_dni unique (dni)
+    constraint fk_employees_accounts foreign key (employee_id) references accounts (account_id)
+
 );
 
 -- rollback drop table employees;
 
 
--- changeset franco:6
+-- changeset franco:7
 create table clients
 (
-    client_id     bigint      not null auto_increment,
-    phone_line_id bigint      not null,
-    city_id       bigint      not null,
-    user_id       bigint,
-    dni           varchar(10) not null,
-    first_name    varchar(50) not null,
-    surname       varchar(50) not null,
+    client_id     bigint not null auto_increment,
+    phone_line_id bigint not null,
     delete_at     datetime,
     constraint pk_clients primary key (client_id),
     constraint fk_clients_phone_lines foreign key (phone_line_id) references phone_lines (phone_line_id),
-    constraint fk_clients_city foreign key (city_id) references cities (city_id),
-    constraint fk_clients_user foreign key (user_id) references users (user_id),
-    constraint unq_dni unique (dni)
+    constraint fk_clients_accounts foreign key (client_id) references accounts (account_id)
 );
 -- rollback drop table clients;
 
--- changeset franco:7
+-- changeset franco:8
 create table calls_fees
 (
     call_fee_id      bigint not null auto_increment,
@@ -99,7 +103,7 @@ create table calls_fees
 
 -- rollback drop table calls_fees;
 
--- changeset franco:8
+-- changeset franco:9
 create table calls_fees_ranges
 (
     call_fee_range_id bigint not null auto_increment,
@@ -112,7 +116,7 @@ create table calls_fees_ranges
 
 -- rollback drop table calls_fees_ranges
 
--- changeset franco:9
+-- changeset franco:10
 create table bills
 (
     bill_id         bigint not null auto_increment,
@@ -128,7 +132,7 @@ create table bills
 
 -- rollback drop table bills;
 
--- changeset franco:10
+-- changeset franco:11
 create table calls
 (
     call_id           bigint      not null auto_increment,

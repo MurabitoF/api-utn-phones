@@ -1,5 +1,6 @@
 package com.example.utnphones.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -33,6 +34,7 @@ public class CallFee {
 
 
     @OneToMany(mappedBy = "callFee")
+    @JsonManagedReference
     private List<CallFeeRange> callFeeRange;
 
     public Long getCallFeeId() {

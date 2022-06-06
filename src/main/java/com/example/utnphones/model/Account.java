@@ -13,14 +13,15 @@ import javax.persistence.*;
         {@JsonSubTypes.Type(value = Client.class, name = "client"),
                 @JsonSubTypes.Type(value = Employee.class, name = "employee")
         })
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@Inheritance(strategy = InheritanceType.JOINED)
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "accounts")
 public abstract class Account {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "account_id")
     private Long accountId;
 

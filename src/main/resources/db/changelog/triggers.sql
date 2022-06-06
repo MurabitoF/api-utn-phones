@@ -20,7 +20,7 @@ begin
     from vw_calls_fees
     where city_origin = vIdCityOrg
       and city_destination = vIdCityDest
-      and NEW.call_date between start_at and end_at;
+      and TIME(NEW.call_date) between start_at and end_at;
 
     if (vPrice = 0)
     then

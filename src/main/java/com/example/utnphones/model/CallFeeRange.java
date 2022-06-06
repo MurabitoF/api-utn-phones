@@ -1,5 +1,6 @@
 package com.example.utnphones.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.NoArgsConstructor;
@@ -27,6 +28,7 @@ public class CallFeeRange {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "call_fee_id", nullable = false)
+    @JsonBackReference
     private CallFee callFee;
 
     public Long getCallFeeRangeId() {
