@@ -95,7 +95,6 @@ create table calls_fees
     call_fee_id      bigint not null auto_increment,
     city_origin      bigint not null,
     city_destination bigint not null,
-    price            float  not null,
     constraint pk_calls_fees primary key (call_fee_id),
     constraint fk_calls_fees_cities_org foreign key (city_origin) references cities (city_id) on delete restrict on update cascade,
     constraint fk_calls_fees_cities_dest foreign key (city_destination) references cities (city_id) on delete restrict on update cascade
@@ -110,6 +109,7 @@ create table calls_fees_ranges
     call_fee_id       bigint not null,
     start_at          time   not null,
     end_at            time   not null,
+    price             float  not null,
     constraint pk_calls_fees_range primary key (call_fee_range_id),
     constraint fk_calls_fees_ranges foreign key (call_fee_id) references calls_fees (call_fee_id)
 );

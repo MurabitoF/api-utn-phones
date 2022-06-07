@@ -28,7 +28,7 @@ select cf.call_fee_id,
        cd.area_code as area_detination,
        cfr.start_at,
        cfr.end_at,
-       cf.price
+       cfr.price
 from calls_fees cf
          join calls_fees_ranges cfr on cf.call_fee_id = cfr.call_fee_id
          join cities co on cf.city_origin = co.city_id

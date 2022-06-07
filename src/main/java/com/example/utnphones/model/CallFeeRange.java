@@ -26,6 +26,9 @@ public class CallFeeRange {
     @Column(name = "end_at", nullable = false)
     private LocalTime endAt;
 
+    @Column(name = "price")
+    private Double price;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "call_fee_id", nullable = false)
     @JsonBackReference
@@ -53,6 +56,14 @@ public class CallFeeRange {
 
     public void setEndAt(LocalTime endAt) {
         this.endAt = endAt;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
     }
 
     public CallFee getCallFee() {

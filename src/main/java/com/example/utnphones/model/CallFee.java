@@ -20,9 +20,6 @@ public class CallFee {
     @Column(name = "call_fee_id")
     private Long callFeeId;
 
-    @Column(name = "price")
-    private Double price;
-
     @OneToOne
     @JoinColumn(name = "city_origin", nullable = false)
     private City cityOrigin;
@@ -43,14 +40,6 @@ public class CallFee {
 
     public void setCallFeeId(Long callFeeId) {
         this.callFeeId = callFeeId;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
     }
 
     public List<CallFeeRange> getCallFeeRange() {

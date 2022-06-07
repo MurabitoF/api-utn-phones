@@ -77,7 +77,6 @@ public class CallFeeController {
         CallFee newCallFee = CallFee.builder()
                 .cityOrigin(cityOrigin)
                 .cityDestination(cityDestination)
-                .price(callFeeRequest.getPrice())
                 .build();
 
         CallFee savedCallFee = callFeeService.saveNewCallFee(newCallFee);
@@ -86,11 +85,11 @@ public class CallFeeController {
                 .callFee(savedCallFee)
                 .startAt(LocalTime.parse(callFeeRequest.getStartAt()))
                 .endAt(LocalTime.parse(callFeeRequest.getEndAt()))
+                .price(callFeeRequest.getPrice())
                 .build();
 
-        CallFeeRange callfeeRange = callFeeRangeService.saveNewRange(newCallFeeRange);
+       callFeeRangeService.saveNewRange(newCallFeeRange);
 
-        newCallFee.getCallFeeRange().add(callfeeRange);
         return ResponseEntity.status(HttpStatus.CREATED).body(newCallFee);
     }
 
@@ -101,6 +100,7 @@ public class CallFeeController {
         CallFeeRange newCallFeeRange = CallFeeRange.builder()
                 .startAt(LocalTime.parse(callFeeRangeRequest.getStartAt()))
                 .endAt(LocalTime.parse(callFeeRangeRequest.getEndAt()))
+                .price(callFeeRangeRequest.getPrice())
                 .callFee(callFee)
                 .build();
 
@@ -113,6 +113,7 @@ public class CallFeeController {
         CallFeeRange callFeeRange = CallFeeRange.builder()
                 .startAt(LocalTime.parse(callFeeRangeRequest.getStartAt()))
                 .endAt(LocalTime.parse(callFeeRangeRequest.getEndAt()))
+                .price(callFeeRangeRequest.getPrice())
                 .build();
 
         return ResponseEntity.ok(callFeeRangeService.updateCallFeeRange(rangeId, callFeeRange));
