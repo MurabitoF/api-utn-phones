@@ -56,6 +56,7 @@ create table accounts
     dni        varchar(10) not null,
     first_name varchar(50) not null,
     surname    varchar(50) not null,
+    delete_at  datetime,
     constraint pk_accounts primary key (account_id),
     constraint fk_employees_cities foreign key (city_id) references cities (city_id) on delete restrict on update cascade,
     constraint fk_employees_users foreign key (user_id) references users (user_id),
@@ -76,13 +77,11 @@ create table employees
 
 -- rollback drop table employees;
 
-
 -- changeset franco:7
 create table clients
 (
     client_id     bigint not null auto_increment,
     phone_line_id bigint not null,
-    delete_at     datetime,
     constraint pk_clients primary key (client_id),
     constraint fk_clients_phone_lines foreign key (phone_line_id) references phone_lines (phone_line_id),
     constraint fk_clients_accounts foreign key (client_id) references accounts (account_id)

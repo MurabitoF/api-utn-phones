@@ -17,9 +17,6 @@ import java.time.LocalDateTime;
 @PrimaryKeyJoinColumn(name = "client_id")
 public class Client extends Account {
 
-    @Column(name = "delete_at")
-    private LocalDateTime deleteAt;
-
     @OneToOne
     @JoinColumn(name = "phone_line_id")
     private PhoneLine phoneLine;
@@ -32,11 +29,4 @@ public class Client extends Account {
         this.phoneLine = phoneLine;
     }
 
-    public LocalDateTime getDeleteAt() {
-        return deleteAt;
-    }
-
-    public void setDeleteAt(LocalDateTime deleteAt) {
-        this.deleteAt = deleteAt;
-    }
 }

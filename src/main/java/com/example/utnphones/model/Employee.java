@@ -19,4 +19,12 @@ public class Employee extends Account {
 
     @Column(name = "employee_area")
     private String employeeArea;
+
+    public String getEmployeeArea() {
+        return employeeArea;
+    }
+
+    public void setEmployeeArea(String employeeArea) {
+        this.employeeArea = employeeArea;
+    }
 }

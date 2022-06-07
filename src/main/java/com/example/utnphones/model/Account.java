@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
+
 @Entity
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXTERNAL_PROPERTY, property = "@type")
 @JsonSubTypes(
@@ -33,6 +35,9 @@ public abstract class Account {
 
     @Column(name = "dni", length = 10, nullable = false, unique = true)
     private String dni;
+
+    @Column(name = "delete_at")
+    private LocalDateTime deleteAt;
 
     @OneToOne
     @JoinColumn(name = "city_id", nullable = false)
@@ -72,6 +77,14 @@ public abstract class Account {
 
     public void setDni(String dni) {
         this.dni = dni;
+    }
+
+    public LocalDateTime getDeleteAt() {
+        return deleteAt;
+    }
+
+    public void setDeleteAt(LocalDateTime deleteAt) {
+        this.deleteAt = deleteAt;
     }
 
     public City getCity() {

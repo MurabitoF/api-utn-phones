@@ -10,7 +10,10 @@ import org.springframework.data.domain.Pageable;
 public interface AccountService {
     public Page<Employee> getAllEmployees(Pageable pageable);
     public Page<Client> getAllClients(Pageable pageable);
+    public Account getAccountById(Long id) throws NotFoundEntityException;
     public Employee getEmployeeById(Long id) throws NotFoundEntityException;
     public Client getClientById(Long id) throws NotFoundEntityException;
     public Account saveNewAccount(Account account);
+    public Account updateAccount(Long id, Account account) throws NotFoundEntityException;
+    public void deleteAccount(Long id) throws NotFoundEntityException;
 }

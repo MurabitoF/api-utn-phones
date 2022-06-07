@@ -80,6 +80,18 @@ public class AccountController {
         return ResponseEntity.ok(accountService.saveNewAccount(newAccount));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Account> updateAccount(@Valid @RequestBody AccountRequestDto accountRequest, @PathVariable Long id) throws NotFoundEntityException, MappingException {
+        Account account = this.convertToEntity(accountRequest);
+        return ResponseEntity.ok(accountService.updateAccount(id, account));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Account> deleteAccount(@PathVariable Long id) throws NotFoundEntityException {
+        accountService.deleteAccount(id);
+        return ResponseEntity.noContent().build();
+    }
+
     private Account convertToEntity(AccountRequestDto accountRequest) throws NotFoundEntityException, MappingException {
         City city = cityService.getCityById(accountRequest.getCityId());
 
