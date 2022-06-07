@@ -1,6 +1,7 @@
 package com.example.utnphones.config;
 
 import com.example.utnphones.filter.JwtAuthorizationFilter;
+import com.example.utnphones.model.Role;
 import com.example.utnphones.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -62,6 +63,9 @@ public class WebSecurity {
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/login").permitAll()
                 .antMatchers(HttpMethod.POST, "/register").permitAll()
+                .and()
+                .authorizeRequests()
+                .antMatchers(HttpMethod.POST, "/api/calls/").hasAuthority(Role.ANTENNA.toString())
                 .anyRequest().authenticated();
 
 
