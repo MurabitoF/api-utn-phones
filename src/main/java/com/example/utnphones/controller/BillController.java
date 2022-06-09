@@ -3,8 +3,8 @@ package com.example.utnphones.controller;
 import com.example.utnphones.exception.NotFoundEntityException;
 import com.example.utnphones.model.Bill;
 import com.example.utnphones.model.Client;
+import com.example.utnphones.service.AccountService;
 import com.example.utnphones.service.BillService;
-import com.example.utnphones.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,12 +17,12 @@ import org.springframework.web.bind.annotation.*;
 public class BillController {
 
     private final BillService billService;
-    private final ClientService clientService;
+    private final AccountService accountService;
 
     @Autowired
-    public BillController(BillService billService, ClientService clientService) {
+    public BillController(BillService billService, AccountService accountService) {
         this.billService = billService;
-        this.clientService = clientService;
+        this.accountService = accountService;
     }
 
     @GetMapping("/")
@@ -52,7 +52,7 @@ public class BillController {
             @RequestParam(required = false, defaultValue = "10") Integer pageSize) throws NotFoundEntityException {
         Pageable pageable = PageRequest.of(page, pageSize);
 
-        Client client = clientService.getClientById(id);
+        Client client = accountService.getClientById(id);
 
         Page<Bill> bills = billService.getBillsByClient(pageable, client);
 

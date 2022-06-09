@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username)
+        return userRepository.findByUsernameAndDeleteAtNull(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Username does not exist"));
     }
 }

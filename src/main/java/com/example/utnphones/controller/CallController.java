@@ -1,13 +1,14 @@
 package com.example.utnphones.controller;
 
 import com.example.utnphones.dto.CallRequestDto;
+import com.example.utnphones.dto.CallResponseDto;
 import com.example.utnphones.exception.NotFoundEntityException;
 import com.example.utnphones.model.Call;
-import com.example.utnphones.model.PhoneLine;
+import com.example.utnphones.model.Client;
+import com.example.utnphones.service.AccountService;
 import com.example.utnphones.service.CallService;
-import com.example.utnphones.service.PhoneLineService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.web.format.DateTimeFormatters;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -20,16 +21,19 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @RestController
-@RequestMapping("/api/calls")
+@RequestMapping(value = "/api/calls")
 public class CallController {
 
     private final CallService callService;
-    private final PhoneLineService phoneLineService;
+    private final AccountService accountService;
+
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public CallController(CallService callService, PhoneLineService phoneLineService) {
+    public CallController(CallService callService, AccountService accountService, ModelMapper modelMapper) {
         this.callService = callService;
-        this.phoneLineService = phoneLineService;
+        this.accountService = accountService;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping("/")
@@ -68,17 +72,20 @@ public class CallController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Call> saveNewCall(@RequestBody @Valid final CallRequestDto callRequest) throws NotFoundEntityException {
-        PhoneLine phoneOrigin = phoneLineService.getPhoneLineByPhoneNumber(callRequest.getOrigin());
-        PhoneLine phoneDestination = phoneLineService.getPhoneLineByPhoneNumber(callRequest.getDestination());
+    public ResponseEntity<CallResponseDto> saveNewCall(@RequestBody @Valid final CallRequestDto callRequest) throws NotFoundEntityException {
+        Client phoneOrigin = accountService.getClientByPhoneNumber(callRequest.getOrigin());
+        Client phoneDestination = accountService.getClientByPhoneNumber(callRequest.getDestination());
 
-        Call newCall = new Call(
+        Call newCall = callService.saveNewCall(new Call(
                 LocalDateTime.parse(callRequest.getDatetime(), DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")),
                 callRequest.getDuration(),
                 phoneOrigin,
                 phoneDestination
-        );
+        ));
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(callService.saveNewCall(newCall));
+
+        CallResponseDto response = modelMapper.map(newCall, CallResponseDto.class);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 }

@@ -18,6 +18,7 @@ import org.springframework.web.client.HttpClientErrorException;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -35,29 +36,29 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public Page<Employee> getAllEmployees(Pageable pageable) {
-        return employeeRepository.findAll(pageable);
+        return employeeRepository.findAllByDeleteAtNull(pageable);
     }
 
     @Override
     public Page<Client> getAllClients(Pageable pageable) {
-        return clientRepository.findAll(pageable);
+        return clientRepository.findAllByDeleteAtNull(pageable);
     }
 
     @Override
     public Account getAccountById(Long id) throws NotFoundEntityException {
-        return accountRepository.findById(id)
+        return accountRepository.findByAccountIdAndDeleteAtNull(id)
                 .orElseThrow(() -> new NotFoundEntityException("Account"));
     }
 
     @Override
     public Employee getEmployeeById(Long id) throws NotFoundEntityException {
-        return employeeRepository.findById(id)
+        return employeeRepository.findByAccountIdAndDeleteAtNull(id)
                 .orElseThrow(() -> new NotFoundEntityException("Employee"));
     }
 
     @Override
     public Client getClientById(Long id) throws NotFoundEntityException {
-        return clientRepository.findById(id)
+        return clientRepository.findByAccountIdAndDeleteAtNull(id)
                 .orElseThrow(() -> new NotFoundEntityException("Client"));
     }
 
@@ -98,8 +99,8 @@ public class AccountServiceImpl implements AccountService {
         }else{
             Client client = (Client) account;
             Client updatedClient = (Client) updatedAccount;
-            if (!Objects.isNull(client.getPhoneLine()) && !updatedClient.getPhoneLine().equals(client.getPhoneLine())){
-                updatedClient.setPhoneLine(client.getPhoneLine());
+            if (!StringUtils.isBlank(client.getPhoneNumber()) && !updatedClient.getPhoneNumber().equals(client.getPhoneNumber())){
+                updatedClient.setPhoneNumber(client.getPhoneNumber());
             }
 
             return clientRepository.save(updatedClient);
@@ -110,5 +111,17 @@ public class AccountServiceImpl implements AccountService {
     public void deleteAccount(Long id) throws NotFoundEntityException {
         Account deletedAccount = this.getAccountById(id);
         deletedAccount.setDeleteAt(LocalDateTime.now());
+    }
+
+    @Override
+    public Client getClientByPhoneNumber(String phoneNumber) throws NotFoundEntityException {
+        return clientRepository.findByPhoneNumber(phoneNumber)
+                .orElseThrow(() -> new NotFoundEntityException("Client"));
+    }
+
+    @Override
+    public Boolean phoneNumberExist(String phoneNumber) {
+        Optional<Client> client = clientRepository.findByPhoneNumber(phoneNumber);
+        return client.isPresent();
     }
 }

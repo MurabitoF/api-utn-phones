@@ -7,6 +7,8 @@ import com.example.utnphones.model.Employee;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.Optional;
+
 public interface AccountService {
     public Page<Employee> getAllEmployees(Pageable pageable);
     public Page<Client> getAllClients(Pageable pageable);
@@ -16,4 +18,6 @@ public interface AccountService {
     public Account saveNewAccount(Account account);
     public Account updateAccount(Long id, Account account) throws NotFoundEntityException;
     public void deleteAccount(Long id) throws NotFoundEntityException;
+    public Client getClientByPhoneNumber(String phoneNumber) throws NotFoundEntityException;
+    public Boolean phoneNumberExist(String phoneNumber);
 }

@@ -22,10 +22,9 @@ end $
 create view vw_calls_fees
 as
 select cf.call_fee_id,
+       cfr.call_fee_range_id,
        co.city_id as city_origin,
-       co.area_code as area_origin,
        cd.city_id as city_destination,
-       cd.area_code as area_detination,
        cfr.start_at,
        cfr.end_at,
        cfr.price

@@ -3,12 +3,12 @@ package com.example.utnphones.controller;
 import com.example.utnphones.dto.AccountRequestDto;
 import com.example.utnphones.dto.ClientRequestDto;
 import com.example.utnphones.dto.EmployeeRequestDto;
+import com.example.utnphones.exception.EntityExitstExeption;
 import com.example.utnphones.exception.MappingException;
 import com.example.utnphones.exception.NotFoundEntityException;
 import com.example.utnphones.model.*;
 import com.example.utnphones.service.AccountService;
 import com.example.utnphones.service.CityService;
-import com.example.utnphones.service.PhoneLineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/accounts")
@@ -24,14 +25,12 @@ public class AccountController {
 
     private final AccountService accountService;
     private final CityService cityService;
-    private final PhoneLineService phoneLineService;
 
 
     @Autowired
-    public AccountController(AccountService accountService, CityService cityService, PhoneLineService phoneLineService) {
+    public AccountController(AccountService accountService, CityService cityService) {
         this.accountService = accountService;
         this.cityService = cityService;
-        this.phoneLineService = phoneLineService;
     }
 
     @GetMapping("/employees/")
@@ -75,13 +74,13 @@ public class AccountController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Account> saveNewAccount(@Valid @RequestBody final AccountRequestDto accountRequest) throws NotFoundEntityException, MappingException {
+    public ResponseEntity<Account> saveNewAccount(@Valid @RequestBody final AccountRequestDto accountRequest) throws NotFoundEntityException, MappingException, EntityExitstExeption {
         Account newAccount = this.convertToEntity(accountRequest);
         return ResponseEntity.ok(accountService.saveNewAccount(newAccount));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Account> updateAccount(@Valid @RequestBody AccountRequestDto accountRequest, @PathVariable Long id) throws NotFoundEntityException, MappingException {
+    public ResponseEntity<Account> updateAccount(@Valid @RequestBody AccountRequestDto accountRequest, @PathVariable Long id) throws NotFoundEntityException, MappingException, EntityExitstExeption {
         Account account = this.convertToEntity(accountRequest);
         return ResponseEntity.ok(accountService.updateAccount(id, account));
     }
@@ -92,7 +91,7 @@ public class AccountController {
         return ResponseEntity.noContent().build();
     }
 
-    private Account convertToEntity(AccountRequestDto accountRequest) throws NotFoundEntityException, MappingException {
+    private Account convertToEntity(AccountRequestDto accountRequest) throws NotFoundEntityException, MappingException, EntityExitstExeption {
         City city = cityService.getCityById(accountRequest.getCityId());
 
         if(accountRequest instanceof EmployeeRequestDto){
@@ -104,21 +103,20 @@ public class AccountController {
                     .employeeArea(((EmployeeRequestDto) accountRequest).getArea())
                     .build();
         } else if (accountRequest instanceof ClientRequestDto) {
-            PhoneLine newPhoneLine = PhoneLine.builder()
-                    .phoneNumber(((ClientRequestDto) accountRequest).getPhoneLine().getPhoneNumber())
-                    .build();
-            PhoneLine phoneLine = phoneLineService.saveNewPhoneLine(newPhoneLine);
+            if (accountService.phoneNumberExist(((ClientRequestDto) accountRequest).getPhoneNumber())){
+                throw new EntityExitstExeption("Phone number");
+            }
 
             return Client.builder()
                     .firstName(accountRequest.getFirstName())
                     .surname(accountRequest.getSurname())
                     .dni(accountRequest.getDni())
                     .city(city)
-                    .phoneLine(phoneLine)
+                    .phoneNumber(((ClientRequestDto) accountRequest).getPhoneNumber())
                     .build();
         }
         else {
-            throw new MappingException("The request don't belongs to a valid type");
+            throw new MappingException("The request entity don't belongs to a valid type");
         }
     }
 }

@@ -1,6 +1,5 @@
 -- liquibase formatted sql
-use prueba;
-drop procedure bill_all_clients;
+
 -- changeset franco:1 stripComments:false splitStatements:true endDelimiter:$ runOnChange:true
 create procedure bill_client(IN pClientId int)
 begin
@@ -12,9 +11,8 @@ begin
     declare vFinished int default 0;
     declare cur_bill cursor for select call_id, total
                                 from calls c
-                                where phone_origin = (select pl.phone_number
+                                where phone_origin = (select cli.phone_number
                                                       from clients cli
-                                                               join phone_lines pl on pl.phone_line_id = cli.phone_line_id
                                                       where cli.client_id = pClientID)
                                   and bill_id is null;
     declare continue handler for not found set vFinished = 1;
@@ -51,7 +49,7 @@ create procedure bill_all_clients()
 begin
     declare vIdClient varchar(9);
     declare vFinished int default 0;
-    declare cur_clients cursor for select client_id from clients;
+    declare cur_clients cursor for select client_id from clients where delete_at is NULL;
     declare continue handler for not found set vFinished = 1;
 
     open cur_clients;

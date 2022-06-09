@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.io.Serializable;
 
 @Entity
 @AllArgsConstructor
@@ -15,18 +15,16 @@ import java.time.LocalDateTime;
 @JsonTypeName("client")
 @Table(name = "clients")
 @PrimaryKeyJoinColumn(name = "client_id")
-public class Client extends Account {
+public class Client extends Account implements Serializable {
 
-    @OneToOne
-    @JoinColumn(name = "phone_line_id")
-    private PhoneLine phoneLine;
+    @Column(name = "phone_number", length = 10, unique = true, nullable = false)
+    public String phoneNumber;
 
-    public PhoneLine getPhoneLine() {
-        return phoneLine;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhoneLine(PhoneLine phoneLine) {
-        this.phoneLine = phoneLine;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
-
 }
