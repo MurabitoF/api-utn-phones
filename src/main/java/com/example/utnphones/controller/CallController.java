@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.datetime.DateFormatter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,10 +45,6 @@ public class CallController {
 
         Page<Call> calls = callService.getAllCalls(pageable);
 
-        if(!calls.hasContent()){
-            return ResponseEntity.noContent().build();
-        }
-
         return ResponseEntity.ok(calls);
     }
 
@@ -56,18 +53,22 @@ public class CallController {
         return ResponseEntity.ok(callService.getCallById(id));
     }
 
-    @GetMapping(value = "/phoneOrigin/{phoneOrigin}")
+    @GetMapping(value = "/clients/{phoneOrigin}")
     public ResponseEntity<Page<Call>> getCallByPhoneOrigin(
             @RequestParam(required = false, defaultValue = "0") Integer page,
             @RequestParam(required = false, defaultValue = "10") Integer pageSize,
-            @PathVariable String phoneOrigin){
+            @RequestParam String from,
+            @RequestParam String until,
+            @PathVariable String phoneOrigin) throws NotFoundEntityException {
         Pageable pageable = PageRequest.of(page, pageSize);
 
-        Page<Call> calls = callService.getCallsMadeByNumber(pageable, phoneOrigin);
+        Client client = accountService.getClientByPhoneNumber(phoneOrigin);
 
-        if(!calls.hasContent()){
-            return ResponseEntity.noContent().build();
-        }
+        LocalDateTime dateFrom = LocalDateTime.parse(from, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        LocalDateTime dateUntil = LocalDateTime.parse(until, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+        Page<Call> calls = callService.getCallsMadeByNumber(pageable, client, dateFrom, dateUntil);
+
         return ResponseEntity.ok(calls);
     }
 

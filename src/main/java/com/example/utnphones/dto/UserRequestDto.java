@@ -2,6 +2,7 @@ package com.example.utnphones.dto;
 
 import com.example.utnphones.model.Role;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class UserRequestDto {
 
     @NotBlank(message = "username is required")

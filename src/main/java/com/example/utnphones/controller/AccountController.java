@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -41,9 +42,9 @@ public class AccountController {
 
         Page<Employee> employees = accountService.getAllEmployees(pageable);
 
-        if(!employees.hasContent()){
-            return ResponseEntity.noContent().build();
-        }
+//        if(!employees.hasContent()){
+//            return ResponseEntity.noContent().build();
+//        }
 
         return ResponseEntity.ok(employees);
     }
@@ -61,9 +62,9 @@ public class AccountController {
 
         Page<Client> clients = accountService.getAllClients(pageable);
 
-        if(!clients.hasContent()){
-            return ResponseEntity.noContent().build();
-        }
+//        if(!clients.hasContent()){
+//            return ResponseEntity.noContent().build();
+//        }
 
         return ResponseEntity.ok(clients);
     }
@@ -74,13 +75,13 @@ public class AccountController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Account> saveNewAccount(@Valid @RequestBody final AccountRequestDto accountRequest) throws NotFoundEntityException, MappingException, EntityExitstExeption {
+    public ResponseEntity<Account> saveNewAccount(@Valid @RequestBody final AccountRequestDto accountRequest) throws NotFoundEntityException {
         Account newAccount = this.convertToEntity(accountRequest);
-        return ResponseEntity.ok(accountService.saveNewAccount(newAccount));
+        return ResponseEntity.status(HttpStatus.CREATED).body(accountService.saveNewAccount(newAccount));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Account> updateAccount(@Valid @RequestBody AccountRequestDto accountRequest, @PathVariable Long id) throws NotFoundEntityException, MappingException, EntityExitstExeption {
+    public ResponseEntity<Account> updateAccount(@Valid @RequestBody AccountRequestDto accountRequest, @PathVariable Long id) throws NotFoundEntityException, EntityExitstExeption {
         Account account = this.convertToEntity(accountRequest);
         return ResponseEntity.ok(accountService.updateAccount(id, account));
     }
@@ -91,7 +92,7 @@ public class AccountController {
         return ResponseEntity.noContent().build();
     }
 
-    private Account convertToEntity(AccountRequestDto accountRequest) throws NotFoundEntityException, MappingException, EntityExitstExeption {
+    private Account convertToEntity(AccountRequestDto accountRequest) throws NotFoundEntityException {
         City city = cityService.getCityById(accountRequest.getCityId());
 
         if(accountRequest instanceof EmployeeRequestDto){
@@ -102,10 +103,7 @@ public class AccountController {
                     .city(city)
                     .employeeArea(((EmployeeRequestDto) accountRequest).getArea())
                     .build();
-        } else if (accountRequest instanceof ClientRequestDto) {
-            if (accountService.phoneNumberExist(((ClientRequestDto) accountRequest).getPhoneNumber())){
-                throw new EntityExitstExeption("Phone number");
-            }
+        } else {
 
             return Client.builder()
                     .firstName(accountRequest.getFirstName())
@@ -114,9 +112,6 @@ public class AccountController {
                     .city(city)
                     .phoneNumber(((ClientRequestDto) accountRequest).getPhoneNumber())
                     .build();
-        }
-        else {
-            throw new MappingException("The request entity don't belongs to a valid type");
         }
     }
 }

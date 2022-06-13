@@ -33,9 +33,9 @@ public class BillController {
 
         Page<Bill> bills = billService.getAllBills(pageable);
 
-        if(!bills.hasContent()){
-            return ResponseEntity.noContent().build();
-        }
+//        if(!bills.hasContent()){
+//            return ResponseEntity.noContent().build();
+//        }
 
         return ResponseEntity.ok(bills);
     }
@@ -55,10 +55,6 @@ public class BillController {
         Client client = accountService.getClientById(id);
 
         Page<Bill> bills = billService.getBillsByClient(pageable, client);
-
-        if (!bills.hasContent()){
-            return ResponseEntity.noContent().build();
-        }
 
         return ResponseEntity.ok(bills);
     }

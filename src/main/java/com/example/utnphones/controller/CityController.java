@@ -32,9 +32,9 @@ public class CityController {
         Pageable pageable = PageRequest.of(page, pageSize);
         Page<City> cities = cityService.getAllCities(pageable);
 
-        if (!cities.hasContent()){
-            return ResponseEntity.noContent().build();
-        }
+//        if (!cities.hasContent()){
+//            return ResponseEntity.noContent().build();
+//        }
 
         return ResponseEntity.ok(cities);
     }

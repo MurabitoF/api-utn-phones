@@ -2,6 +2,7 @@ package com.example.utnphones.service.impl;
 
 import com.example.utnphones.exception.NotFoundEntityException;
 import com.example.utnphones.model.Call;
+import com.example.utnphones.model.Client;
 import com.example.utnphones.repository.CallRepository;
 import com.example.utnphones.service.CallService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 
 @Service
 public class CallServiceImpl implements CallService {
@@ -38,8 +40,8 @@ public class CallServiceImpl implements CallService {
     }
 
     @Override
-    public Page<Call> getCallsMadeByNumber(Pageable pageable, String phoneOrigen) {
-        return callRepository.findAllByPhoneOrigen(pageable, phoneOrigen);
+    public Page<Call> getCallsMadeByNumber(Pageable pageable, Client phoneOrigen, LocalDateTime from, LocalDateTime until) {
+        return callRepository.findAllByPhoneOriginAndCallDateBetween(pageable, phoneOrigen, from, until);
     }
 
     @Override

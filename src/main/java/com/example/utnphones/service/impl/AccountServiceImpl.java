@@ -1,5 +1,6 @@
 package com.example.utnphones.service.impl;
 
+import com.example.utnphones.exception.EntityExitstExeption;
 import com.example.utnphones.exception.NotFoundEntityException;
 import com.example.utnphones.model.Account;
 import com.example.utnphones.model.Client;
@@ -74,7 +75,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account updateAccount(Long id, Account account) throws NotFoundEntityException {
+    public Account updateAccount(Long id, Account account) throws NotFoundEntityException, EntityExitstExeption {
         Account updatedAccount = this.getAccountById(id);
 
         if (!StringUtils.isBlank(account.getFirstName()) && !updatedAccount.getFirstName().equals(account.getFirstName())){
@@ -99,7 +100,11 @@ public class AccountServiceImpl implements AccountService {
         }else{
             Client client = (Client) account;
             Client updatedClient = (Client) updatedAccount;
+
             if (!StringUtils.isBlank(client.getPhoneNumber()) && !updatedClient.getPhoneNumber().equals(client.getPhoneNumber())){
+                if (phoneNumberExist(updatedClient.getPhoneNumber())){
+                    throw new EntityExitstExeption("Phone number");
+                }
                 updatedClient.setPhoneNumber(client.getPhoneNumber());
             }
 
@@ -111,6 +116,7 @@ public class AccountServiceImpl implements AccountService {
     public void deleteAccount(Long id) throws NotFoundEntityException {
         Account deletedAccount = this.getAccountById(id);
         deletedAccount.setDeleteAt(LocalDateTime.now());
+        accountRepository.save(deletedAccount);
     }
 
     @Override

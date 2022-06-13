@@ -28,9 +28,9 @@ public class ProvinceController {
 
         Page<Province> provinces = provinceService.getAllProvinces(pageable);
 
-        if(!provinces.hasContent()){
-            return ResponseEntity.noContent().build();
-        }
+//        if(!provinces.hasContent()){
+//            return ResponseEntity.noContent().build();
+//        }
 
         return ResponseEntity.ok(provinces);
     }

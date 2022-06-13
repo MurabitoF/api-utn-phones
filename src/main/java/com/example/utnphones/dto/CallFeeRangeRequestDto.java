@@ -1,6 +1,7 @@
 package com.example.utnphones.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import javax.validation.constraints.Positive;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class CallFeeRangeRequestDto {
 
     @NotBlank(message = "startAt is required")

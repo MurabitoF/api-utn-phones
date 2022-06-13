@@ -26,7 +26,7 @@ public class CallFeeRangeServiceImpl implements CallFeeRangeService {
 
     @Override
     public List<CallFeeRange> getAllRangesByCallFee(CallFee callFee) {
-        return callFeeRangeRepository.findByCallFee(callFee);
+        return callFeeRangeRepository.findAllByCallFee(callFee);
     }
 
     @Override

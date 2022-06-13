@@ -1,5 +1,6 @@
 package com.example.utnphones.service;
 
+import com.example.utnphones.exception.EntityExitstExeption;
 import com.example.utnphones.exception.NotFoundEntityException;
 import com.example.utnphones.model.Account;
 import com.example.utnphones.model.Client;
@@ -16,7 +17,7 @@ public interface AccountService {
     public Employee getEmployeeById(Long id) throws NotFoundEntityException;
     public Client getClientById(Long id) throws NotFoundEntityException;
     public Account saveNewAccount(Account account);
-    public Account updateAccount(Long id, Account account) throws NotFoundEntityException;
+    public Account updateAccount(Long id, Account account) throws NotFoundEntityException, EntityExitstExeption;
     public void deleteAccount(Long id) throws NotFoundEntityException;
     public Client getClientByPhoneNumber(String phoneNumber) throws NotFoundEntityException;
     public Boolean phoneNumberExist(String phoneNumber);

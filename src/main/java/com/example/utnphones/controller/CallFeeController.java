@@ -45,9 +45,9 @@ public class CallFeeController {
 
         Page<CallFee> callFees = callFeeService.getAllCallFees(pageable);
 
-        if (!callFees.hasContent()){
-            return ResponseEntity.noContent().build();
-        }
+//        if (!callFees.hasContent()){
+//            return ResponseEntity.noContent().build();
+//        }
 
         return ResponseEntity.ok(callFees);
     }
@@ -62,9 +62,9 @@ public class CallFeeController {
         CallFee callFee = callFeeService.getCallFeeById(id);
         List<CallFeeRange> callFeeRanges = callFeeRangeService.getAllRangesByCallFee(callFee);
 
-        if(callFeeRanges.isEmpty()){
-            return ResponseEntity.noContent().build();
-        }
+//        if(callFeeRanges.isEmpty()){
+//            return ResponseEntity.noContent().build();
+//        }
 
         return ResponseEntity.ok(callFeeRanges);
     }
