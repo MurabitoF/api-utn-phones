@@ -64,12 +64,16 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public Account saveNewAccount(Account account) {
+    public Account saveNewAccount(Account account) throws EntityExitstExeption {
         if (account instanceof Employee){
             Employee newEmployee = (Employee) account;
             return employeeRepository.save(newEmployee);
         } else {
             Client newClient = (Client) account;
+            if (phoneNumberExist(newClient.getPhoneNumber())){
+                    throw new EntityExitstExeption("Phone number");
+            }
+
             return clientRepository.save(newClient);
         }
     }
@@ -101,7 +105,7 @@ public class AccountServiceImpl implements AccountService {
             Client client = (Client) account;
             Client updatedClient = (Client) updatedAccount;
 
-            if (!StringUtils.isBlank(client.getPhoneNumber()) && !updatedClient.getPhoneNumber().equals(client.getPhoneNumber())){
+            if (!Objects.equals(updatedClient.getPhoneNumber(), client.getPhoneNumber())){
                 if (phoneNumberExist(updatedClient.getPhoneNumber())){
                     throw new EntityExitstExeption("Phone number");
                 }

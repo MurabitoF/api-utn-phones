@@ -21,6 +21,7 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static com.example.utnphones.utils.MockModels.*;
@@ -61,10 +62,11 @@ class BillServiceTest {
         final Pageable pageable = PageRequest.of(0, 10);
         final Page<Bill> aBillPage = aBillPage();
         final Client aClient = aClient();
+        final LocalDateTime aLocalDateTime = LocalDateTime.now();
 
-        Mockito.when(billRepository.findAllByClient(pageable, aClient)).thenReturn(aBillPage);
+        Mockito.when(billRepository.findAllByClientAndBillDateBetween(pageable, aClient, aLocalDateTime, aLocalDateTime)).thenReturn(aBillPage);
 
-        Page<Bill> response = billService.getBillsByClient(pageable, aClient);
+        Page<Bill> response = billService.getBillsByClient(pageable, aClient, aLocalDateTime, aLocalDateTime);
 
         assertNotNull(response, "Should be not null");
         assertTrue(response.hasContent(), "Should have content");

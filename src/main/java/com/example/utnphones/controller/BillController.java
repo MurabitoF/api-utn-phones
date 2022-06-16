@@ -12,6 +12,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @RestController
 @RequestMapping("/api/bills")
 public class BillController {
@@ -49,12 +52,16 @@ public class BillController {
     public ResponseEntity<Page<Bill>> getBillsOfClient(
             @PathVariable Long id,
             @RequestParam(required = false, defaultValue = "0") Integer page,
-            @RequestParam(required = false, defaultValue = "10") Integer pageSize) throws NotFoundEntityException {
+            @RequestParam(required = false, defaultValue = "10") Integer pageSize,
+            @RequestParam String from,
+            @RequestParam String until) throws NotFoundEntityException {
         Pageable pageable = PageRequest.of(page, pageSize);
 
         Client client = accountService.getClientById(id);
+        LocalDateTime dateFrom = LocalDateTime.parse(from, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        LocalDateTime dateUntil = LocalDateTime.parse(until, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
-        Page<Bill> bills = billService.getBillsByClient(pageable, client);
+        Page<Bill> bills = billService.getBillsByClient(pageable, client, dateFrom, dateUntil);
 
         return ResponseEntity.ok(bills);
     }

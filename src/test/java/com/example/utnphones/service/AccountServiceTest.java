@@ -161,7 +161,7 @@ public class AccountServiceTest {
     }
 
     @Test
-    void saveNewEmployee() {
+    void saveNewEmployeeTest() throws EntityExitstExeption {
         MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
 
@@ -178,7 +178,7 @@ public class AccountServiceTest {
     }
 
     @Test
-    void saveNewClient() {
+    void saveNewClientTest() throws EntityExitstExeption {
         MockHttpServletRequest request = new MockHttpServletRequest();
         RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
 
@@ -186,12 +186,27 @@ public class AccountServiceTest {
         final Client aClient = aClient();
         aClient.setAccountId(1L);
 
+        Mockito.when(clientRepository.findByPhoneNumber(aClientNoId.getPhoneNumber())).thenReturn(Optional.empty());
         Mockito.when(clientRepository.save(aClientNoId)).thenReturn(aClient);
 
         final Account response = accountService.saveNewAccount(aClientNoId);
 
         assertNotNull(response, "Should be not null");
         assertEquals(aClient, response);
+    }
+
+    @Test
+    void saveNewClientFailedTest() throws EntityExitstExeption {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+
+        final Client aClientNoId = aClient();
+        final Client aClient = aClient();
+        aClient.setAccountId(1L);
+
+        Mockito.when(clientRepository.findByPhoneNumber(aClientNoId.getPhoneNumber())).thenReturn(Optional.of(aClient));
+
+        assertThrows(EntityExitstExeption.class, () -> { accountService.saveNewAccount(aClientNoId); });
     }
 
     @Test

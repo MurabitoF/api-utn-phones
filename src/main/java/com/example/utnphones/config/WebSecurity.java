@@ -63,8 +63,15 @@ public class WebSecurity {
                 .and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.POST, "/api/calls/").hasAuthority(Role.ANTENNA.toString())
+                .and()
+                .authorizeRequests()
+                .antMatchers("/api/accounts/clients/**/**").hasAnyAuthority(Role.EMPLOYEE.toString(), Role.CLIENT.toString())
+                .antMatchers("/api/calls/clients/**").hasAnyAuthority(Role.EMPLOYEE.toString(), Role.CLIENT.toString())
+                .antMatchers("/api/bills/clients/**").hasAnyAuthority(Role.EMPLOYEE.toString(), Role.CLIENT.toString())
+                .and()
+                .authorizeRequests()
+                .antMatchers("/**").hasAuthority(Role.EMPLOYEE.toString())
                 .anyRequest().authenticated();
-
 
         return http.build();
     }

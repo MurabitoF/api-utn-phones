@@ -40,7 +40,7 @@ class BillControllerTest extends AbstractTest {
     @Test
     void getBillsByClientId() throws Exception {
         final ResultActions resultActions = givenController().perform(MockMvcRequestBuilders
-                .get("/api/bills/clients/1")
+                .get("/api/bills/clients/1?from=2022-06-12 00:00:00&until=2022-06-13 00:00:00")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }

@@ -11,13 +11,16 @@ import com.example.utnphones.service.AccountService;
 import com.example.utnphones.service.CityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Objects;
 
 @RestController
@@ -42,10 +45,6 @@ public class AccountController {
 
         Page<Employee> employees = accountService.getAllEmployees(pageable);
 
-//        if(!employees.hasContent()){
-//            return ResponseEntity.noContent().build();
-//        }
-
         return ResponseEntity.ok(employees);
     }
 
@@ -62,10 +61,6 @@ public class AccountController {
 
         Page<Client> clients = accountService.getAllClients(pageable);
 
-//        if(!clients.hasContent()){
-//            return ResponseEntity.noContent().build();
-//        }
-
         return ResponseEntity.ok(clients);
     }
 
@@ -74,8 +69,30 @@ public class AccountController {
         return ResponseEntity.ok(accountService.getClientById(id));
     }
 
+    @GetMapping("/clients/{id}/calls/")
+    public ResponseEntity<List<Call>> getCallsFromClient(Authentication auth, @PathVariable Long id) throws NotFoundEntityException {
+        Client client = accountService.getClientById(id);
+        User loggedUser = (User) auth.getPrincipal();
+        if(auth.getAuthorities().contains(Role.CLIENT.toString()) && !client.getUser().equals(loggedUser)){
+            return ResponseEntity.status(403).build();
+        }
+
+        return ResponseEntity.ok(client.getCallsMade());
+    }
+
+    @GetMapping("/clients/{id}/bills/")
+    public ResponseEntity<List<Bill>> getBillsFromClient(Authentication auth, @PathVariable Long id) throws NotFoundEntityException {
+        Client client = accountService.getClientById(id);
+        User loggedUser = (User) auth.getPrincipal();
+        if(auth.getAuthorities().contains(Role.CLIENT.toString()) && !client.getUser().equals(loggedUser)){
+            return ResponseEntity.status(403).build();
+        }
+
+        return ResponseEntity.ok(client.getBills());
+    }
+
     @PostMapping("/")
-    public ResponseEntity<Account> saveNewAccount(@Valid @RequestBody final AccountRequestDto accountRequest) throws NotFoundEntityException {
+    public ResponseEntity<Account> saveNewAccount(@Valid @RequestBody final AccountRequestDto accountRequest) throws NotFoundEntityException, EntityExitstExeption {
         Account newAccount = this.convertToEntity(accountRequest);
         return ResponseEntity.status(HttpStatus.CREATED).body(accountService.saveNewAccount(newAccount));
     }
@@ -104,7 +121,6 @@ public class AccountController {
                     .employeeArea(((EmployeeRequestDto) accountRequest).getArea())
                     .build();
         } else {
-
             return Client.builder()
                     .firstName(accountRequest.getFirstName())
                     .surname(accountRequest.getSurname())

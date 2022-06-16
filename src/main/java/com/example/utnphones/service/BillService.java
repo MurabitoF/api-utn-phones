@@ -6,9 +6,11 @@ import com.example.utnphones.model.Client;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDateTime;
+
 public interface BillService {
 
     public Page<Bill> getAllBills(Pageable pageable);
-    public Page<Bill> getBillsByClient(Pageable pageable, Client client);
+    public Page<Bill> getBillsByClient(Pageable pageable, Client client, LocalDateTime from, LocalDateTime until);
     public Bill getBillById(Long id) throws NotFoundEntityException;
 }
