@@ -30,7 +30,8 @@ create table users
     password  varchar(60)  not null,
     role      varchar(10)  not null,
     delete_at datetime,
-    constraint pk_users primary key (user_id)
+    constraint pk_users primary key (user_id),
+    constraint uk_username unique (username)
 );
 -- rollback drop table users;
 

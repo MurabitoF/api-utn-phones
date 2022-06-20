@@ -1,5 +1,6 @@
 package com.example.utnphones.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.AllArgsConstructor;
@@ -45,6 +46,7 @@ public abstract class Account {
 
     @OneToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     public Long getAccountId() {

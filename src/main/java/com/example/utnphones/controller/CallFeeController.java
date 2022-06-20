@@ -45,10 +45,6 @@ public class CallFeeController {
 
         Page<CallFee> callFees = callFeeService.getAllCallFees(pageable);
 
-//        if (!callFees.hasContent()){
-//            return ResponseEntity.noContent().build();
-//        }
-
         return ResponseEntity.ok(callFees);
     }
 
@@ -61,10 +57,6 @@ public class CallFeeController {
     public ResponseEntity<List<CallFeeRange>> getAllRangesFromCallFee(@PathVariable Long id) throws NotFoundEntityException {
         CallFee callFee = callFeeService.getCallFeeById(id);
         List<CallFeeRange> callFeeRanges = callFeeRangeService.getAllRangesByCallFee(callFee);
-
-//        if(callFeeRanges.isEmpty()){
-//            return ResponseEntity.noContent().build();
-//        }
 
         return ResponseEntity.ok(callFeeRanges);
     }

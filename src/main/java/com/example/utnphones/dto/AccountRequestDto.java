@@ -42,7 +42,7 @@ public class AccountRequestDto {
     @Positive(message = "cityId must be greater than 0")
     private Long cityId;
 
-    @Positive(message = "userId must be greater than 0")
-    private Long userId;
+    @NotBlank(message = "username is required")
+    private String username;
 
 }

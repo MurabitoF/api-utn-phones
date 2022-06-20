@@ -5,6 +5,8 @@ import com.example.utnphones.dto.CallResponseDto;
 import com.example.utnphones.exception.NotFoundEntityException;
 import com.example.utnphones.model.Call;
 import com.example.utnphones.model.Client;
+import com.example.utnphones.model.Role;
+import com.example.utnphones.model.User;
 import com.example.utnphones.service.AccountService;
 import com.example.utnphones.service.CallService;
 import org.modelmapper.ModelMapper;
@@ -15,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.format.datetime.DateFormatter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -59,10 +62,15 @@ public class CallController {
             @RequestParam(required = false, defaultValue = "10") Integer pageSize,
             @RequestParam String from,
             @RequestParam String until,
-            @PathVariable String phoneOrigin) throws NotFoundEntityException {
+            @PathVariable String phoneOrigin,
+            Authentication auth) throws NotFoundEntityException {
         Pageable pageable = PageRequest.of(page, pageSize);
 
         Client client = accountService.getClientByPhoneNumber(phoneOrigin);
+        User loggedUser = (User) auth.getPrincipal();
+        if(loggedUser.getRole().equals(Role.CLIENT) && !client.getUser().getUsername().equals(loggedUser.getUsername())){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
 
         LocalDateTime dateFrom = LocalDateTime.parse(from, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         LocalDateTime dateUntil = LocalDateTime.parse(until, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
