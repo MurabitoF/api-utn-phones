@@ -17,8 +17,6 @@ begin
                                   and bill_id is null;
     declare continue handler for not found set vFinished = 1;
 
-    start transaction;
-
     insert into bills(client_id, total, bill_date, expiration_date)
     values (pClientID, 0, now(), DATE_ADD(now(), INTERVAL 15 DAY));
     set vIdBill = last_insert_id();
@@ -34,11 +32,6 @@ begin
             fetch cur_bill into vIdCall, vTotal;
         end while;
     update bills set calls_amount = vAmount, total = vSum where bill_id = vIdBill;
-    if (vAmount = 0) then
-        rollback;
-    else
-        commit;
-    end if;
     close cur_bill;
 end $
 
@@ -48,6 +41,7 @@ end $
 create procedure bill_all_clients()
 begin
     declare vIdClient varchar(9);
+    declare vCount int default 0;
     declare vFinished int default 0;
     declare cur_clients cursor for select client_id from clients where delete_at is NULL;
     declare continue handler for not found set vFinished = 1;
@@ -56,11 +50,29 @@ begin
     fetch cur_clients into vIdClient;
     while (vFinished = 0)
         do
-            start transaction;
-            call bill_client(vIdClient);
-            fetch cur_clients into vIdClient;
-            commit;
+            select count(*)
+            into vCount
+            from calls c
+            where phone_origin = (select cli.phone_number
+                                  from clients cli
+                                  where cli.client_id = pClientID)
+              and bill_id is null;
+            if(vCount > 0) then
+                start transaction;
+                call bill_client(vIdClient);
+                fetch cur_clients into vIdClient;
+                commit;
+            else
+                fetch cur_clients into vIdClient;
+            end if;
         end while;
 end $
 
 -- rollback drop procedure bill_all_clients;
+
+-- changeset franco:3
+create event monthly_billing
+    on schedule every 1 month
+    do call bill_all_clients();
+
+-- rollback drop event monthly_billing;
