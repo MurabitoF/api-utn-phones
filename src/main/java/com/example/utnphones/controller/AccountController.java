@@ -4,7 +4,6 @@ import com.example.utnphones.dto.AccountRequestDto;
 import com.example.utnphones.dto.ClientRequestDto;
 import com.example.utnphones.dto.EmployeeRequestDto;
 import com.example.utnphones.exception.EntityExitstExeption;
-import com.example.utnphones.exception.MappingException;
 import com.example.utnphones.exception.NotFoundEntityException;
 import com.example.utnphones.model.*;
 import com.example.utnphones.service.AccountService;
@@ -12,7 +11,6 @@ import com.example.utnphones.service.CityService;
 import com.example.utnphones.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -21,8 +19,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/accounts")
@@ -30,7 +26,6 @@ public class AccountController {
 
     private final AccountService accountService;
     private final CityService cityService;
-
     private final UserService userService;
 
 
