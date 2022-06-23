@@ -2,12 +2,14 @@ package com.example.utnphones.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -64,67 +66,67 @@ public class Call {
         this.phoneDestination = phoneDestination;
     }
 
-    public Long getCallId() {
-        return callId;
-    }
-
-    public void setCallId(Long callId) {
-        this.callId = callId;
-    }
-
-    public LocalDateTime getCallDate() {
-        return callDate;
-    }
-
-    public void setCallDate(LocalDateTime callDate) {
-        this.callDate = callDate;
-    }
-
-    public Integer getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Integer duration) {
-        this.duration = duration;
-    }
-
-    public Double getTotal() {
-        return total;
-    }
-
-    public void setTotal(Double total) {
-        this.total = total;
-    }
-
-    public Client getPhoneOrigin() {
-        return phoneOrigin;
-    }
-
-    public void setPhoneOrigen(Client phoneOrigin) {
-        this.phoneOrigin = phoneOrigin;
-    }
-
-    public Client getPhoneDestination() {
-        return phoneDestination;
-    }
-
-    public void setPhoneDestination(Client phoneDestination) {
-        this.phoneDestination = phoneDestination;
-    }
-
-    public CallFee getCallFee() {
-        return callFee;
-    }
-
-    public void setCallFee(CallFee callFee) {
-        this.callFee = callFee;
-    }
-
-    public Bill getBill() {
-        return bill;
-    }
-
-    public void setBill(Bill bill) {
-        this.bill = bill;
-    }
+//    public Long getCallId() {
+//        return callId;
+//    }
+//
+//    public void setCallId(Long callId) {
+//        this.callId = callId;
+//    }
+//
+//    public LocalDateTime getCallDate() {
+//        return callDate;
+//    }
+//
+//    public void setCallDate(LocalDateTime callDate) {
+//        this.callDate = callDate;
+//    }
+//
+//    public Integer getDuration() {
+//        return duration;
+//    }
+//
+//    public void setDuration(Integer duration) {
+//        this.duration = duration;
+//    }
+//
+//    public Double getTotal() {
+//        return total;
+//    }
+//
+//    public void setTotal(Double total) {
+//        this.total = total;
+//    }
+//
+//    public Client getPhoneOrigin() {
+//        return phoneOrigin;
+//    }
+//
+//    public void setPhoneOrigen(Client phoneOrigin) {
+//        this.phoneOrigin = phoneOrigin;
+//    }
+//
+//    public Client getPhoneDestination() {
+//        return phoneDestination;
+//    }
+//
+//    public void setPhoneDestination(Client phoneDestination) {
+//        this.phoneDestination = phoneDestination;
+//    }
+//
+//    public CallFee getCallFee() {
+//        return callFee;
+//    }
+//
+//    public void setCallFee(CallFee callFee) {
+//        this.callFee = callFee;
+//    }
+//
+//    public Bill getBill() {
+//        return bill;
+//    }
+//
+//    public void setBill(Bill bill) {
+//        this.bill = bill;
+//    }
 }

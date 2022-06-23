@@ -106,7 +106,7 @@ public class AccountServiceImpl implements AccountService {
             Client updatedClient = (Client) updatedAccount;
 
             if (!Objects.equals(updatedClient.getPhoneNumber(), client.getPhoneNumber())){
-                if (phoneNumberExist(updatedClient.getPhoneNumber())){
+                if (phoneNumberExist(client.getPhoneNumber())){
                     throw new EntityExitstExeption("Phone number");
                 }
                 updatedClient.setPhoneNumber(client.getPhoneNumber());

@@ -12,7 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 @RestController
@@ -36,10 +36,6 @@ public class BillController {
 
         Page<Bill> bills = billService.getAllBills(pageable);
 
-//        if(!bills.hasContent()){
-//            return ResponseEntity.noContent().build();
-//        }
-
         return ResponseEntity.ok(bills);
     }
 
@@ -58,8 +54,8 @@ public class BillController {
         Pageable pageable = PageRequest.of(page, pageSize);
 
         Client client = accountService.getClientById(id);
-        LocalDateTime dateFrom = LocalDateTime.parse(from, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        LocalDateTime dateUntil = LocalDateTime.parse(until, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        LocalDate dateFrom = LocalDate.parse(from, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        LocalDate dateUntil = LocalDate.parse(until, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 
         Page<Bill> bills = billService.getBillsByClient(pageable, client, dateFrom, dateUntil);
 

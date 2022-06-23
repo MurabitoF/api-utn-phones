@@ -1,4 +1,3 @@
---
 
 -- changeset index:1
 create index idx_calls_date on calls(phone_origin, call_date)

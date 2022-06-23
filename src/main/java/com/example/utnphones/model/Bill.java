@@ -3,6 +3,7 @@ package com.example.utnphones.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -47,59 +49,59 @@ public class Bill {
     @OneToMany(mappedBy = "bill", fetch = FetchType.LAZY)
     private List<Call> calls;
 
-    public Long getBillId() {
-        return billId;
-    }
-
-    public void setBillId(Long billId) {
-        this.billId = billId;
-    }
-
-    public Integer getCallsAmount() {
-        return callsAmount;
-    }
-
-    public void setCallsAmount(Integer callsAmount) {
-        this.callsAmount = callsAmount;
-    }
-
-    public Double getTotal() {
-        return total;
-    }
-
-    public void setTotal(Double total) {
-        this.total = total;
-    }
-
-    public LocalDate getBillDate() {
-        return billDate;
-    }
-
-    public void setBillDate(LocalDate billDate) {
-        this.billDate = billDate;
-    }
-
-    public LocalDate getExpirationDate() {
-        return expirationDate;
-    }
-
-    public void setExpirationDate(LocalDate expirationDate) {
-        this.expirationDate = expirationDate;
-    }
-
-    public LocalDateTime getBillPaidAt() {
-        return billPaidAt;
-    }
-
-    public void setBillPaidAt(LocalDateTime billPaidAt) {
-        this.billPaidAt = billPaidAt;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
+//    public Long getBillId() {
+//        return billId;
+//    }
+//
+//    public void setBillId(Long billId) {
+//        this.billId = billId;
+//    }
+//
+//    public Integer getCallsAmount() {
+//        return callsAmount;
+//    }
+//
+//    public void setCallsAmount(Integer callsAmount) {
+//        this.callsAmount = callsAmount;
+//    }
+//
+//    public Double getTotal() {
+//        return total;
+//    }
+//
+//    public void setTotal(Double total) {
+//        this.total = total;
+//    }
+//
+//    public LocalDate getBillDate() {
+//        return billDate;
+//    }
+//
+//    public void setBillDate(LocalDate billDate) {
+//        this.billDate = billDate;
+//    }
+//
+//    public LocalDate getExpirationDate() {
+//        return expirationDate;
+//    }
+//
+//    public void setExpirationDate(LocalDate expirationDate) {
+//        this.expirationDate = expirationDate;
+//    }
+//
+//    public LocalDateTime getBillPaidAt() {
+//        return billPaidAt;
+//    }
+//
+//    public void setBillPaidAt(LocalDateTime billPaidAt) {
+//        this.billPaidAt = billPaidAt;
+//    }
+//
+//    public Client getClient() {
+//        return client;
+//    }
+//
+//    public void setClient(Client client) {
+//        this.client = client;
+//    }
 }

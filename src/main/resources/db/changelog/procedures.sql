@@ -65,6 +65,7 @@ begin
             else
                 fetch cur_clients into vIdClient;
             end if;
+
         end while;
 end $
 

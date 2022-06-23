@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
         })
 @Inheritance(strategy = InheritanceType.JOINED)
 @SuperBuilder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "accounts")
@@ -49,59 +51,59 @@ public abstract class Account {
     @JsonIgnore
     private User user;
 
-    public Long getAccountId() {
-        return accountId;
-    }
-
-    public void setAccountId(Long userId) {
-        this.accountId = userId;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public String getDni() {
-        return dni;
-    }
-
-    public void setDni(String dni) {
-        this.dni = dni;
-    }
-
-    public LocalDateTime getDeleteAt() {
-        return deleteAt;
-    }
-
-    public void setDeleteAt(LocalDateTime deleteAt) {
-        this.deleteAt = deleteAt;
-    }
-
-    public City getCity() {
-        return city;
-    }
-
-    public void setCity(City city) {
-        this.city = city;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
+//    public Long getAccountId() {
+//        return accountId;
+//    }
+//
+//    public void setAccountId(Long userId) {
+//        this.accountId = userId;
+//    }
+//
+//    public String getFirstName() {
+//        return firstName;
+//    }
+//
+//    public void setFirstName(String firstName) {
+//        this.firstName = firstName;
+//    }
+//
+//    public String getSurname() {
+//        return surname;
+//    }
+//
+//    public void setSurname(String surname) {
+//        this.surname = surname;
+//    }
+//
+//    public String getDni() {
+//        return dni;
+//    }
+//
+//    public void setDni(String dni) {
+//        this.dni = dni;
+//    }
+//
+//    public LocalDateTime getDeleteAt() {
+//        return deleteAt;
+//    }
+//
+//    public void setDeleteAt(LocalDateTime deleteAt) {
+//        this.deleteAt = deleteAt;
+//    }
+//
+//    public City getCity() {
+//        return city;
+//    }
+//
+//    public void setCity(City city) {
+//        this.city = city;
+//    }
+//
+//    public User getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(User user) {
+//        this.user = user;
+//    }
 }

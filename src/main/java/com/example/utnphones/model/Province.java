@@ -2,11 +2,13 @@ package com.example.utnphones.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -21,19 +23,19 @@ public class Province {
     @Column(name = "province_name", length = 50, nullable = false)
     private String provinceName;
 
-    public Long getProvinceId() {
-        return provinceId;
-    }
-
-    public void setProvinceId(Long provinceId) {
-        this.provinceId = provinceId;
-    }
-
-    public String getProvinceName() {
-        return provinceName;
-    }
-
-    public void setProvinceName(String provinceName) {
-        this.provinceName = provinceName;
-    }
+//    public Long getProvinceId() {
+//        return provinceId;
+//    }
+//
+//    public void setProvinceId(Long provinceId) {
+//        this.provinceId = provinceId;
+//    }
+//
+//    public String getProvinceName() {
+//        return provinceName;
+//    }
+//
+//    public void setProvinceName(String provinceName) {
+//        this.provinceName = provinceName;
+//    }
 }

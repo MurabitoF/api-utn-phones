@@ -3,11 +3,13 @@ package com.example.utnphones.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -30,35 +32,35 @@ public class City {
     @JoinColumn(name = "province_id", nullable = false)
     private Province province;
 
-    public Long getCityId() {
-        return cityId;
-    }
-
-    public void setCityId(Long cityId) {
-        this.cityId = cityId;
-    }
-
-    public String getCityName() {
-        return cityName;
-    }
-
-    public void setCityName(String cityName) {
-        this.cityName = cityName;
-    }
-
-    public String getAreaCode() {
-        return areaCode;
-    }
-
-    public void setAreaCode(String areaCode) {
-        this.areaCode = areaCode;
-    }
-
-    public Province getProvince() {
-        return province;
-    }
-
-    public void setProvince(Province province) {
-        this.province = province;
-    }
+//    public Long getCityId() {
+//        return cityId;
+//    }
+//
+//    public void setCityId(Long cityId) {
+//        this.cityId = cityId;
+//    }
+//
+//    public String getCityName() {
+//        return cityName;
+//    }
+//
+//    public void setCityName(String cityName) {
+//        this.cityName = cityName;
+//    }
+//
+//    public String getAreaCode() {
+//        return areaCode;
+//    }
+//
+//    public void setAreaCode(String areaCode) {
+//        this.areaCode = areaCode;
+//    }
+//
+//    public Province getProvince() {
+//        return province;
+//    }
+//
+//    public void setProvince(Province province) {
+//        this.province = province;
+//    }
 }

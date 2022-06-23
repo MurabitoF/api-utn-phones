@@ -226,7 +226,7 @@ public class AccountServiceTest {
         aUpdatedEmployee.setSurname("Perez");
         aUpdatedEmployee.setCity(aCity);
         aUpdatedEmployee.setDni("111111111");
-        aEmployee.setEmployeeArea("Software Development");
+        aEmployee.setEmployeeArea("Software");
 
         Mockito.when(accountRepository.findByAccountIdAndDeleteAtNull(1L)).thenReturn(Optional.of(aEmployee));
         Mockito.when(employeeRepository.save(aEmployee)).thenReturn(aUpdatedEmployee);
@@ -293,25 +293,25 @@ public class AccountServiceTest {
         assertEquals(aUpdatedClient, response);
     }
 
-//    @Test
-//    void updateClientFailedTest(){
-//        MockHttpServletRequest request = new MockHttpServletRequest();
-//        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
-//
-//        final Client aClient = aClient();
-//        aClient.setAccountId(1L);
-//
-//        final Client aUpdatedClient = aClient();
-//        aUpdatedClient.setAccountId(1L);
-//        aUpdatedClient.setPhoneNumber("2222222222");
-//
-//        Optional<Client> client = Optional.of(aClient);
-//
-//        Mockito.when(accountRepository.findByAccountIdAndDeleteAtNull(1L)).thenReturn(Optional.of(aClient));
-//        Mockito.when(clientRepository.findByPhoneNumber(aUpdatedClient.getPhoneNumber())).thenReturn(client);
-//
-//        assertThrows(EntityExitstExeption.class, () -> { accountService.updateAccount(1L, aUpdatedClient); });
-//    }
+    @Test
+    void updateClientFailedTest(){
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+
+        final Client aClient = aClient();
+        aClient.setAccountId(1L);
+
+        final Client aUpdatedClient = aClient();
+        aUpdatedClient.setAccountId(1L);
+        aUpdatedClient.setPhoneNumber("2222222222");
+
+        Optional<Client> client = Optional.of(aClient);
+
+        Mockito.when(accountRepository.findByAccountIdAndDeleteAtNull(1L)).thenReturn(Optional.of(aClient));
+        Mockito.when(clientRepository.findByPhoneNumber(aUpdatedClient.getPhoneNumber())).thenReturn(client);
+
+        assertThrows(EntityExitstExeption.class, () -> { accountService.updateAccount(1L, aUpdatedClient); });
+    }
 
     @Test
     void updateClientNoChangesTest() throws NotFoundEntityException, EntityExitstExeption {

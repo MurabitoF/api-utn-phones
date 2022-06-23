@@ -3,12 +3,14 @@ package com.example.utnphones.model;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -34,35 +36,35 @@ public class CallFee {
     @JsonManagedReference
     private List<CallFeeRange> callFeeRange;
 
-    public Long getCallFeeId() {
-        return callFeeId;
-    }
-
-    public void setCallFeeId(Long callFeeId) {
-        this.callFeeId = callFeeId;
-    }
-
-    public List<CallFeeRange> getCallFeeRange() {
-        return callFeeRange;
-    }
-
-    public void setCallFeeRange(List<CallFeeRange> callFeeRange) {
-        this.callFeeRange = callFeeRange;
-    }
-
-    public City getCityOrigin() {
-        return cityOrigin;
-    }
-
-    public void setCityOrigin(City cityOrigin) {
-        this.cityOrigin = cityOrigin;
-    }
-
-    public City getCityDestination() {
-        return cityDestination;
-    }
-
-    public void setCityDestination(City cityDestination) {
-        this.cityDestination = cityDestination;
-    }
+//    public Long getCallFeeId() {
+//        return callFeeId;
+//    }
+//
+//    public void setCallFeeId(Long callFeeId) {
+//        this.callFeeId = callFeeId;
+//    }
+//
+//    public List<CallFeeRange> getCallFeeRange() {
+//        return callFeeRange;
+//    }
+//
+//    public void setCallFeeRange(List<CallFeeRange> callFeeRange) {
+//        this.callFeeRange = callFeeRange;
+//    }
+//
+//    public City getCityOrigin() {
+//        return cityOrigin;
+//    }
+//
+//    public void setCityOrigin(City cityOrigin) {
+//        this.cityOrigin = cityOrigin;
+//    }
+//
+//    public City getCityDestination() {
+//        return cityDestination;
+//    }
+//
+//    public void setCityDestination(City cityDestination) {
+//        this.cityDestination = cityDestination;
+//    }
 }

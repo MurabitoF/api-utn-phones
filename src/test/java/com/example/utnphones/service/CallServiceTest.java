@@ -5,6 +5,7 @@ import com.example.utnphones.model.Call;
 import com.example.utnphones.model.Client;
 import com.example.utnphones.repository.CallRepository;
 import com.example.utnphones.service.impl.CallServiceImpl;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,20 +14,22 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static com.example.utnphones.utils.MockModels.*;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -38,8 +41,16 @@ class CallServiceTest {
     @Mock
     private CallRepository callRepository;
 
-    @MockBean
-    private EntityManager entityManager;
+    EntityManagerFactory entityManagerFactory;
+    EntityManager entityManager;
+
+    @BeforeEach
+    void setup(){
+        entityManagerFactory = Mockito.mock(EntityManagerFactory.class);
+        entityManager = Mockito.mock(EntityManager.class);
+        Mockito.when(entityManagerFactory.createEntityManager()).thenReturn(entityManager);
+        Mockito.doNothing().when(entityManager).refresh(any(Call.class));
+    }
 
     @Test
     void getAllCallsTest() {
@@ -107,23 +118,24 @@ class CallServiceTest {
         assertEquals(aCallPage, response);
     }
 
-//    @Test
-//    void saveNewCallTest() {
-//        MockHttpServletRequest request = new MockHttpServletRequest();
-//        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
-//
-//        final Call aCallNoId = aCall();
-//        final Call aCall = aCall();
-//        aCall.setCallId(1L);
-//        aCall.setCallFee(aCallFee());
-//        aCall.setCallFeeRange(aCallFeeRange());
-//        aCall.setTotal(100D);
-//
-//        Mockito.when(callRepository.save(aCallNoId)).thenReturn(aCall);
-//
-//        final Call response = callService.saveNewCall(aCallNoId);
-//
-//        assertNotNull(response, "Should be not null");
-//        assertEquals(aCall, response);
-//    }
+    @Test
+    void saveNewCallTest() {
+        MockHttpServletRequest request = new MockHttpServletRequest();
+        RequestContextHolder.setRequestAttributes(new ServletRequestAttributes(request));
+
+        final Call aCallNoId = aCall();
+        final Call aCall = aCall();
+        aCall.setCallId(1L);
+        aCall.setCallFee(aCallFee());
+        aCall.setCallFeeRange(aCallFeeRange());
+        aCall.setTotal(100D);
+
+        Mockito.when(callRepository.saveAndFlush(aCallNoId)).thenReturn(aCall);
+
+
+        final Call response = callService.saveNewCall(aCallNoId);
+
+        assertNotNull(response, "Should be not null");
+        assertEquals(aCall, response);
+    }
 }

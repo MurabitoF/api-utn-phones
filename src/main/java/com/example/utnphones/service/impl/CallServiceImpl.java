@@ -47,8 +47,8 @@ public class CallServiceImpl implements CallService {
     @Override
     @Transactional
     public Call saveNewCall(Call newCall) {
-        Call savedCall = callRepository.save(newCall);
-        entityManager.refresh(savedCall);
+        Call savedCall = callRepository.saveAndFlush(newCall);
+//        entityManager.refresh(savedCall);
         return savedCall;
     }
 }

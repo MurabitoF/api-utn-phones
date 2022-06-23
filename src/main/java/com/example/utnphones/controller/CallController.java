@@ -66,10 +66,6 @@ public class CallController {
         Pageable pageable = PageRequest.of(page, pageSize);
 
         Client client = accountService.getClientByPhoneNumber(phoneOrigin);
-        User loggedUser = (User) auth.getPrincipal();
-        if(loggedUser.getRole().equals(Role.CLIENT) && !client.getUser().getUsername().equals(loggedUser.getUsername())){
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
 
         LocalDateTime dateFrom = LocalDateTime.parse(from, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         LocalDateTime dateUntil = LocalDateTime.parse(until, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));

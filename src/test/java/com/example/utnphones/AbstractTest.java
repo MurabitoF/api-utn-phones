@@ -9,6 +9,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
+
 @AutoConfigureMockMvc
 @AutoConfigureWebMvc
 @ContextConfiguration
@@ -20,7 +22,7 @@ public abstract class AbstractTest {
 
     public MockMvc mockMvc;
 
-    protected MockMvc givenController(){
+    protected MockMvc givenController() {
         return MockMvcBuilders.webAppContextSetup(this.webApplicationContext).build();
     }
 }

@@ -3,6 +3,7 @@ package com.example.utnphones.utils;
 import com.example.utnphones.model.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -48,6 +49,15 @@ public class MockModels {
                 .build();
     }
 
+    public static User aUserDetails(){
+        return User.builder()
+                .userId(1L)
+                .username("client1")
+                .password("1234")
+                .role(Role.CLIENT)
+                .build();
+    }
+
     public static Page<User> aUserPage() {
         List<User> list = new ArrayList<>();
 
@@ -64,6 +74,7 @@ public class MockModels {
                 .surname("Murabito")
                 .dni("11231232")
                 .city(aCity())
+                .user(aUserDetails())
                 .phoneNumber("1234567899")
                 .build();
     }
@@ -135,9 +146,9 @@ public class MockModels {
         return Employee.builder()
                 .firstName("Franco")
                 .surname("Murabito")
+                .dni("12356678")
                 .city(aCity())
-                .dni("12345678")
-                .employeeArea("Area")
+                .employeeArea("Software Development")
                 .build();
     }
 

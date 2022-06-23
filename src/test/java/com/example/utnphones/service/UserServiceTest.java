@@ -1,11 +1,9 @@
 package com.example.utnphones.service;
 
-import com.example.utnphones.model.Bill;
 import com.example.utnphones.model.Role;
 import com.example.utnphones.model.User;
 import com.example.utnphones.repository.UserRepository;
 import com.example.utnphones.service.impl.UserServiceImpl;
-import com.example.utnphones.utils.MockModels;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
